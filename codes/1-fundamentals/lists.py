@@ -160,3 +160,12 @@ nums = [1, 2, 4, 3, 5]
 # print(courses)
 # []
 
+# list to string 
+# courses_str = ', '.join(courses)
+# print(courses_str)
+# Bangla, English, Math
+
+# string to list 
+# courses_from_str = courses_str.split(', ')
+# print(courses_from_str)
+# ['Bangla', 'English', 'Math']
