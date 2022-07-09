@@ -87,3 +87,76 @@ courses = ['Bangla', 'English', 'Math']
 # print(courses)
 # ['Bangla', 'Math']
 
+# list.remove(value)
+# remove a value from a list 
+# res = courses.remove('English')
+# print(res)
+# None
+# print(courses)
+# ['Bangla', 'Math']
+
+# list.reverse()
+# reverse a list
+# courses.reverse() 
+# print(courses)
+# ['Math', 'English', 'Bangla']
+# mutates the list and Reverse the elements of the list in place.
+
+# list.sort() 
+# sorts in alphabetical or numerical order by default, sorts in place meaning it mutates the original list
+# courses.sort()
+# print(courses)
+# ['Bangla', 'English', 'Math']
+
+nums = [1, 2, 4, 3, 5]
+# min(), max() and sum()
+# min()
+# print(min(nums))
+# 1
+#
+# max() 
+# print(max(nums))
+# 5
+#
+# sum()
+# print(sum(nums))
+# 15
+
+# list.copy()
+# Return a shallow copy of the list meaning nested elements will not be copied. Equivalent to courses[:].
+# courses_copy = courses.copy()
+#
+# print(id(courses), courses)
+# 2373837887232 ['Bangla', 'English', 'Math']
+#
+# print(id(courses_copy), courses_copy)
+# 2373837985600 ['Bangla', 'English', 'Math']
+
+# list.count()
+# returns the number of entries of an element in a list or 0 if not present
+# print(courses.count("Bangla"))
+# 1
+# print(courses.count("Biology"))
+# 0
+
+# list.index()
+# retunrns the index of an element in a list or exception if not found
+# print(courses.index("English"))
+# 1
+#
+# print(courses.index("Biology"))
+# ValueError: 'Biology' is not in list
+
+# del list[index]
+# deletes item from a list at provided index
+# del courses[1]
+# print(courses)
+# ['Bangla', 'Math']
+
+
+# list.clear()
+# deletes all elements from an array
+# courses.clear()
+# print(courses)
+# []
+
