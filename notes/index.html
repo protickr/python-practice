@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Notes</title>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        main {
+            width: 900px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <pre>
+        <h2>Fundamentals: installation, execution, variables, data types</h2>
+        <p>
+            Installation and basic script execution
+            1. install python and set environment variables so that python is recognized as a command 
+
+            2. check version in terminal by, 
+                python --version 
+
+            3. create a file with extension .py e.g., main.py
+            4. execute a python script from terminal by 
+                python path_to_python_script.py
+
+
+
+            Variables
+            variable is an identifer to a location in the memory, it is a container that hold a value 
+            e.g., here 'message' is a variable which stores the value 'hello world' 
+                message = 'hello world'
+                print(message)
+
+            * Variable naming convention 
+                1. should be lowercase, in case of multiple words in a variable, all words should be 
+                linked by underscores
+                e.g., multiple_word_variable = 10
+
+                2. should not start with a number or special symbool or hyphen
+                
+                3. ALL_CAPS for constants 
+
+                4. PascalCase for class names 
+
+
+            Data Types
+                1. integer, number with no decimal point, whole number
+                2. float, number with a decimal point, decimal number
+                3. string, string object. 
+                4. booleans, True, False
+
+                python is dynamically typed meaning, the type of value determines the type of a varaible
+
+
+                * integer <class 'int'>
+                    num = 10
+                    
+                * float <class 'float'>
+                    num = 10.6
+                    
+                * type casting / converison 
+                    num_1 = '10'
+                    num_2 = '10.5'
+                    
+                    * string to int, float
+                        print(int(num_1), float(num_2))     # 10 10.5
+        </p>
+
+        <h2>Strings</h2>
+        <p>
+            string is an array of characters which is stored as String object in python 
+
+            string can be created by using double or single quotes, 
+                message = 'this is a string'
+                message = "This is a string"
+
+            multi line string: 
+                multi line string can be created by using 3 double or single quotes, 
+                retians white space and formatting as created
+                
+                    message = '''hello 
+                    world!'''
+                    print(message)
+                    
+                    output: 
+                    hello 
+                    world!
+
+            string methods: 
+                message = "Hello world!"
+
+                * lower case
+                    message.lower()         # hello world!
+
+                * upper case 
+                    message.upper()         # HELLO WORLD!
+
+                * count number of occurance of a substring in a string 
+                    message.count("world")   # 1
+                    message.count("o")       # 2
+                    message.count("t")       # 0
+                
+
+                * find starting index of a substring in a string 
+                    only returns the first match 
+                    message.find("world")    # 6
+                    message.find('universe') # -1, if no match found
+
+                * replace parts of a string with another string 
+                    does not mutate the original string; returns a new string 
+                    message.replace("world", "universe")     # Hello universe!
+
+
+
+                * string concatanation 
+                    greetings = "Hey"
+                    name = "John"
+
+                    * with (+) operator
+                        message = "Hello " + "world!"
+                        print(message)      # Hello world!
+
+                    * with str.format() method / formatted string
+                        message = '{}, {}. Welcome! '.format(greetings, name)
+                        print(message)      # Hey, John. Welcome! 
+
+                    * with f-string (template literals in JS)
+                        message = f'{greetings}, {name}. Welcome!'
+                        print(message)      # Hey, John. Welcome!
+
+        </p>
+
+        <h2>Built in functions</h2>
+        <p> 
+            functions that can be used directly without importing anything or using any namespace
+            * dir()
+                dir(varaible)
+                returns all methods and attributes that we have access to when using a variable
+    
+            * help()
+                help(str)
+                returns doc string of a class           
+                
+            
+            * absolute value - abs() 
+                abs(-15))               # 15
+
+            * round to nearest int or float 
+                * nearest int 
+                    round(10.6))        # 11
+                 
+                * round to nearest float 
+                    round to 1 decimal place
+                    round(10.65, 1))    # 10.7
+
+            * built in function to retrieve object's memory location - id() 
+                num = 10
+                print(id(num))  # 2960035414544
+            
+        </p>
+
+        <h2>Operators</h2>
+        <p>
+            * arithmatic operators
+                num_1 = 10
+                num_2 = 3
+
+                * parenthesis
+                    (num_1 * 2) * num_2     # 60
+
+                * exponentiation
+                    num_1 ** num_2          
+                    # 10 to the power of 3 = 10 * 10 * 10 == 1000
+
+                * multiplication 
+                    num_1 * num_2           # 30
+
+                * divisoin 
+                    num_1 / num_2   
+                    # in python 3,      10 / 3 == 3.3333333333333335
+                    # in python 2,      10 / 3 == 3
+
+                * floor division 
+                    num_1 // num_2          # 10 // 3 == 3
+
+                * remainder operator
+                    num_1 % num_2           # 10 % 3 == 1 
+
+                * addition 
+                    num_1 + num_2           # 10 + 3 == 13
+
+                * substraction 
+                    num_1 - num_2           # 10 - 3 == 7
+
+                * arithmatic operator precendence order 
+                    Parenthesis Exponentiation Multiplication Division Addition Substraction
+                    PEMDAS
+
+
+
+            * Comparison operator 
+                ==, !=, >, <, >=, <=
+
+                num_1 = 10
+                num_2 = 3
+
+                * equal 
+                     num_1 == num_2     # 10 == 3 ? False 
+
+                * not equal 
+                    num_1 != num_2      # 10 != 3 ? True
+
+                * greater than 
+                    num_1 > num_2       # 10 > 3 ? True
+
+                * less than 
+                    num_1 < num_2       # 10 < 3 ? False
+
+                * greater than or equal 
+                    num_1 >= num_2      # 10 >= 3 ? True
+
+                * less than or equal 
+                     num_1 <= num_2     # 10 <= 3 ? False
+
+
+
+            * assignment and compound assignment operator 
+
+                * (assignment ) operator 
+                    num = 10
+
+                * compound assignemnt operators 
+                    num += 1
+                    num = num + 1 == 11
+
+                    num **= 2
+                    num = num ** 2 
+                    num = 10 ** 2
+                    num = 100
+
+                    * similerly,  
+                        -=, *=, /=, //=, %=, **= 
+
+            
+            * logical operators 
+                and, or, not
+
+
+            * membership operator 'in'
+                checks if a value is present in an object, iterables
+                e.g., 
+                    nums = [ 1, 2, 3, 4]
+                    val = 3
+                    if val in nums: 
+                        print(f'{val} is present in the list')
+
+            * identity operator 'is'
+                checks if two variable references to the same object in memory
+                    a = [1, 2, 3]
+                    b = [1, 2, 3]
+                
+                    1. 
+                        print(a is b) False 
+                        print( a == b) True
+            
+                    2.
+                        a = b 
+                        print( a is b)
+                        True
+
+        </p>
+
+        <h2>Conditionals, True and False values </h2>
+        <p>
+            * Boolean values - '<class 'bool'>'
+                1. True 
+                2. False
+
+            * False Values 
+                1. False
+                2. None
+                3. Zero of any numeric type i.e., int, float, 
+                4. empty sequence such as empty tuples(), lists [], strings ""
+                5. epmty mappings such as dictionaries {}, sets {}
+                
+            * True values 
+                except for False values everything else is True
+                
+            * if elif else
+                if condition_1: 
+                    'condition 1 is true'
+                elif condition_2:
+                    'conditon_1 is false and condition_2 is true' 
+                else: 
+                    'condition_1 and condition_2 are false'
+
+        </p>
+        </pre>
+        </main>
+</body>
