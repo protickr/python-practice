@@ -440,7 +440,7 @@
                     courses_from_str = courses_str.split(', ')
                     print(courses_from_str)     # ['Bangla', 'English', 'Math']
 
-                    
+
 
 
             <strong>Tuples</strong>
@@ -687,6 +687,68 @@
                     deletes key: value from a dictionary 
                         del john['age']
                         print(john)     # {'name': 'John', 'country': 'Bangladesh'}
+        </p>
+
+        <h2>Loops</h2>
+        <p>
+            <strong>for</strong> 
+                nums = [1 , 2, 3, 4, 5]
+                * with sequence or collection datas
+                    for num in nums: 
+                        print(num)  # 1 2 3 4 5 [each element on a new line]
+
+                * with range(start, stop)
+                    * range(stop) == range(0, stop)
+                        1. returns an iterable which starts from start value (inclusive)  and 
+                            stops at end value (not inclusive)
+                        2. if single value is passed as an argument then start value becomes 0
+                        
+                    for i in range(1, 6):
+                        print(i)    # 1 2 3 4 5 [each element on a new line]
+
+
+
+                        
+            <strong>while</strong> 
+                x = 0
+                while x &lt; 10: 
+                    print(x)
+                    x += 1
+                
+                # 0 1 2 3 4 5 6 7 8 9 [each element on a new line]
+
+
+                * infinite loop
+                    x = 0
+                    while True: 
+                        x += 1
+                        if x == 4: 
+                            continue
+                        if x == 5:
+                            break
+                        print(x)
+
+                    # 1 2 3 [each element on a new line]
+            
+
+
+            <strong>else clause on loops </strong> 
+                The else clause is executed if you exit a block normally, by hitting the loop 
+                condition or falling off the bottom of a try block. 
+                It is not executed if you break or return out of a block, or raise an exception. 
+                It works for not only while and for loops, but also try blocks.
+
+                You typically find it in places where normally you would exit a loop early, and running 
+                off the end of the loop is an unexpected/unusual occasion. For example, if you're looping 
+                through a list looking for a value:
+
+                    values = [ 1, 2, 3, 4, 5, 6]
+                    for value in values:
+                        if value == 5:
+                            print("Found it!")
+                            break
+                    else:
+                        print("Nowhere to be found. :-(")
         </p>
         </pre>
         </main>
