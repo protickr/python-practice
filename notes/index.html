@@ -62,10 +62,10 @@
                 python is dynamically typed meaning, the type of value determines the type of a varaible
 
 
-                * integer <class 'int'>
+                * integer &lt;class 'int'&gt;
                     num = 10
                     
-                * float <class 'float'>
+                * float &lt;class 'float'&gt;
                     num = 10.6
                     
                 * type casting / converison 
@@ -209,7 +209,7 @@
 
 
             * Comparison operator 
-                ==, !=, >, <, >=, <=
+                ==, !=, >, &lt;, >=, &lt;=
 
                 num_1 = 10
                 num_2 = 3
@@ -224,13 +224,13 @@
                     num_1 > num_2       # 10 > 3 ? True
 
                 * less than 
-                    num_1 < num_2       # 10 < 3 ? False
+                    num_1 &lt; num_2       # 10 &lt; 3 ? False
 
                 * greater than or equal 
                     num_1 >= num_2      # 10 >= 3 ? True
 
                 * less than or equal 
-                     num_1 <= num_2     # 10 <= 3 ? False
+                     num_1 &lt;= num_2     # 10 &lt;= 3 ? False
 
 
 
@@ -282,7 +282,7 @@
 
         <h2>Conditionals, True and False values </h2>
         <p>
-            * Boolean values - '<class 'bool'>'
+            * Boolean values - '&lt;class 'bool'&gt;'
                 1. True 
                 2. False
 
@@ -304,6 +304,142 @@
                 else: 
                     'condition_1 and condition_2 are false'
 
+        </p>
+
+        <h2>Python Builtin Data Structures</h2>
+        <p>
+            list is a collection of elements. list is not actually array because list can have heterogenous 
+            data as list element. takes a lot more space than arrays 
+            array.array and numpy.ndarray are arrays. 
+
+            lists can have different types of data as element. 
+                1. lists can have lists as elements
+                2. list can have dict as elements 
+                3. list can have all of the above at the same list at the same time. 
+                4. list retains order 
+                5. lists are mutable
+
+            declaraing a list 
+                1. students = []
+                2. students = list()
+                type(students)  # &lt;class 'list'&gt;
+                
+                
+            * list methods 
+                courses = ['Bangla', 'English', 'Math']
+            
+                * length of a list
+                    len(courses)        # 3
+                    
+                * access list element by index
+                    courses[1]          # English
+                    
+                * access list item by negative index 
+                    negative index starts from -1 from the end of a list
+                    courses[-1]         # Math
+                    
+                * update list element by index 
+                    courses[-1] = 'Mathematics'
+                    print(courses)      # ['Bangla', 'English', 'Mathematics']
+                    
+                * list slicing / new list from a list by start index (inclusive) and end index ( not inclusive ) 
+                    new_list = courses[ 1 : 2 ]
+                    print(new_list)     # ['English']
+                    
+                    * omitting start index will default to 0 
+                        courses[:2]         # ['Bangla', 'English']
+                        
+                    * omitting end index will return all elements including the last element of a list
+                        courses[0:]         # ['Bangla', 'English', 'Math']
+                        
+                    
+                * list.append(value)
+                    append new element at the end of a list 
+                        courses.append('History')
+                        print(courses)      # ['Bangla', 'English', 'Math', 'History']
+                        
+                * list.insert(index, value)
+                    append element at the specified index and shifts the current element and the consecutive 
+                    elements to the right 
+                    the 'value' can also be a list and in that case it will be placed in the list as an element
+                        courses.insert(1, 'History')
+                        print(courses)      # ['Bangla', 'History', 'English', 'Math']
+                        
+                    
+                * list.extend([new, list])
+                    unpacks the extend's argument into seperate elements and append them to the list 
+                        new_courses = ['History', 'Physics']
+                        courses.extend(new_courses)
+                        print(courses)      # ['Bangla', 'English', 'Math', 'History', 'Physics']
+                        
+                * list.pop(index)
+                    * pops last value from a list if index argument is not passed
+                        popped_value = courses.pop()
+                        print(popped_value)     # Math
+
+                    * pop value from a list by index
+                        print(courses.pop(-2))  # English
+                        print(courses)          # ['Bangla', 'Math']
+                    
+                * list.remove(value)
+                    removes a value from a list 
+                        res = courses.remove('English')
+                        print(res)      # None
+                        print(courses)  # ['Bangla', 'Math']
+                    
+                * list.reverse()
+                    mutates the list and Reverse the elements of the list in place. 
+                        courses.reverse() 
+                        print(courses)  # ['Math', 'English', 'Bangla']
+                        
+                * list.sort() 
+                    sorts in alphabetical or numerical order by default, sorts in place 
+                    meaning it mutates the original list
+                        courses.sort()
+                        print(courses)  # ['Bangla', 'English', 'Math']
+                
+                * list.copy()
+                    Return a shallow copy of the list meaning nested elements will not be copied. 
+                    Equivalent to courses[:]
+                        courses_copy = courses.copy()    
+                        print(id(courses), courses)           # 2373837887232 ['Bangla', 'English', 'Math']
+                        print(id(courses_copy), courses_copy)   # 2373837985600 ['Bangla', 'English', 'Math']
+                        
+                * list.count()
+                    returns the number of entries of an element in a list or 0 if not present
+                    courses.count("Bangla")     # 1
+                    courses.count("Biology")    # 0
+                    
+                * list.index()
+                    retunrns the index of an element in a list or exception if not found
+                        courses.index("English") # 1
+                        courses.index("Biology") # ValueError: 'Biology' is not in list
+                    
+                * del list[index]
+                    deletes item from a list at provided index
+                        del courses[1]
+                        print(courses)  # ['Bangla', 'Math']
+                        
+                * list.clear()
+                    deletes all elements from an array
+                        courses.clear()
+                        print(courses)  # []
+                        
+                * list to string 
+                    courses_str = ', '.join(courses)
+                    print(courses_str)  # Bangla, English, Math
+                    
+                * string to list 
+                    courses_from_str = courses_str.split(', ')
+                    print(courses_from_str)     # ['Bangla', 'English', 'Math']
+
+                nums = [1, 2, 4, 3, 5]
+                * min(), max() and sum()
+                    
+                    * min(nums)   # 1
+                    * max(nums)   # 5
+                    * sum(nums)   # 15
+                    
         </p>
         </pre>
         </main>
