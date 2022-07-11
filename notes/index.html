@@ -33,8 +33,16 @@
             4. execute a python script from terminal by 
                 python path_to_python_script.py
 
+            * take input from console 
+                x =  input('enter a number')
+                input method always returns string 
 
+            * print() 
+                1. print() can take multiple arguments seperated by comma 
+                2. print() takes a keyword argument 'sep' to add seperation between strings 
+                3. print("%2f", 10.5)
 
+                
             Variables
             variable is an identifer to a location in the memory, it is a container that hold a value 
             e.g., here 'message' is a variable which stores the value 'hello world' 
@@ -43,13 +51,9 @@
 
             * Variable naming convention 
                 1. should be lowercase, in case of multiple words in a variable, all words should be 
-                linked by underscores
-                e.g., multiple_word_variable = 10
-
+                    linked by underscores e.g., multiple_word_variable = 10
                 2. should not start with a number or special symbool or hyphen
-                
                 3. ALL_CAPS for constants 
-
                 4. PascalCase for class names 
 
 
@@ -58,6 +62,10 @@
                 2. float, number with a decimal point, decimal number
                 3. string, string object. 
                 4. booleans, True, False
+                5. Set 
+                6. Dictionary
+                7. complex number
+                8. null value, None
 
                 python is dynamically typed meaning, the type of value determines the type of a varaible
 
@@ -67,7 +75,15 @@
                     
                 * float &lt;class 'float'&gt;
                     num = 10.6
-                    
+
+                * complex number 
+                    In python, you can put 'j' or 'J' after a number to make it imaginary, so you can write complex 
+                    literals easily:
+                        1. z = 2 + 3j
+                        2. z =  complex(2,3)
+                         z.real == 2.0
+                         z.imag == 3.0
+                        
                 * type casting / converison 
                     num_1 = '10'
                     num_2 = '10.5'
@@ -78,7 +94,7 @@
 
         <h2>Strings</h2>
         <p>
-            string is an array of characters which is stored as String object in python 
+            string is an sequence of characters which is stored as String object in python 
 
             string can be created by using double or single quotes, 
                 message = 'this is a string'
@@ -95,6 +111,12 @@
                     output: 
                     hello 
                     world!
+
+            escape character 
+                \ (back slash) is used to escape the character that follows it in a string so that it does not 
+                have a special meaning 
+                e.g., 
+                    'a string with escape character it\'s'
 
             string methods: 
                 message = "Hello world!"
@@ -120,7 +142,12 @@
                     does not mutate the original string; returns a new string 
                     message.replace("world", "universe")     # Hello universe!
 
-
+                * strip() characters at start and end of a string 
+                    'this is a string'.strip()
+                    if no argument is passed it strips empty whitespace and \n from start and end of a string
+                    
+                * string.islower() # True or False
+                * string.isupper() # True or False
 
                 * string concatanation 
                     greetings = "Hey"
@@ -173,6 +200,9 @@
                     * min(nums)   # 1
                     * max(nums)   # 5
                     * sum(nums)   # 15
+            
+            * pow(base, exponent)
+                pow(2, 10)  # 1024 
         </p>
 
         <h2>Operators</h2>
@@ -284,6 +314,37 @@
                         print( a is b)
                         True
 
+            * bit-wise operator 
+                &, |, ^, ~ &lt;&lt;, >>
+                Left and right shift are zero fills 
+                Right shift is signed
+
+            * Operator precedence 
+                ()
+                **      [Associativity: right to left]
+                +var 
+                -var 
+                ~var 
+                * 
+                / 
+                // 
+                % 
+                + 
+                - 
+                &lt;&lt; 
+                >> 
+                & 
+                ^ 
+                | 
+                Comparison 
+                Identity 
+                Membership 
+                not 
+                and 
+                or
+
+                Assignment "=" and comparison operator does not have associativity 
+                Rest of them have associativity of left to right 
         </p>
 
         <h2>Conditionals, True and False values, Match statement </h2>
@@ -310,6 +371,9 @@
                     'conditon_1 is false and condition_2 is true' 
                 else: 
                     'condition_1 and condition_2 are false'
+
+            * ternary operator 
+                statement a if True else b
 
 
             * Match statement 
@@ -516,6 +580,8 @@
                     the 'value' can also be a list and in that case it will be placed in the list as an element
                         courses.insert(1, 'History')
                         print(courses)      # ['Bangla', 'History', 'English', 'Math']
+
+                    * If index is out of range then inserts value at the last of the list. 
                         
                     
                 * list.extend([new, list])
