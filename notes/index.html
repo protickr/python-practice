@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Notes</title>
+    <title>Python Notes</title>
     <style type="text/css">
         * {
             box-sizing: border-box;
@@ -708,7 +708,7 @@
 
 
 
-                        
+
             <strong>while</strong> 
                 x = 0
                 while x &lt; 10: 
@@ -751,5 +751,263 @@
                         print("Nowhere to be found. :-(")
         </p>
         </pre>
-        </main>
+
+        <h2>Function</h2>
+        <p>
+            def func():
+                ''' Doc string '''
+                print('Func function is called')
+                return True
+            
+            1. The keyword def introduces a function definition. It must be followed by the function name and 
+                the parenthesized list of formal parameters.
+            2. The first statement of the function body can optionally be a string literal; 
+                this string literal is the function's documentation string, or docstring
+            3. The execution of a function introduces a new symbol table used for the local variables of the function. 
+                More precisely, all variable assignments in a function store the value in the local symbol table
+            
+            * Scope chain 
+                variable look up happens in the following order,  
+                    1. local symbol table 
+                    2. local symbol tables of enclosing functions 
+                    3. global symbol table 
+                    4. table of built-in names
+                * LEGB Rule: Local, Enclosed, Global, Builtins
+
+                Note 1:
+                Thus, global variables and variables of enclosing functions cannot be directly 
+                assigned a value within a function (unless, for global variables, named in a global statement, 
+                or, for variables of enclosing functions, named in a nonlocal statement), 
+                although they may be referenced (their value can be retrieved)
+
+            * How Arguments (Actual Parameters) and Parameters (Formal Parameters)  are Stored 
+                1. The actual parameters (arguments) to a function call are introduced in the local symbol table of the 
+                    called function when it is called; thus, arguments are passed using call by value (where the value 
+                    is always an object reference, not the value of the object).
+                2. When a function calls another function, or calls itself recursively, a new local symbol table is 
+                    created for that call.
+
+            * Functions are objects 
+                A function definition associates the function name with the function object in the current symbol table. 
+                The interpreter recognizes the object pointed to by that name as a user-defined function. 
+                Other names can also point to that same function object and can also be used to access the function
+            
+            * Return Value
+                The return statement returns with a value from a function. 
+                Even functions without a return statement do return a value, This value is called None 
+                Falling off the end of a function also returns None.
+
+            * How default argument values are stored
+                Note 2: 
+                The default values are evaluated at the point of function definition in the defining scope, so that
+                def f(arg=i) says "make me a function f where the default value for arg is whatever i is right now". 
+                At the time of defining the function, i=5.
+
+                *** The default values are evaluated at the point of function definition 
+                    in the defining scope, so that
+                    i = 5
+                    def f(arg=i):
+                        print(arg)
+
+                    i = 6
+                    f()
+                    will print 5
+
+                *** Important warning: The default value is evaluated only once. This makes a difference when 
+                    the default is a mutable object such as a list, dictionary, or instances of most classes. 
+                    For example, the following function accumulates the arguments passed to it on subsequent calls:
+
+                        def f(a, L=[]):
+                            L.append(a)
+                            return L
+                        
+                        print(f(1))
+                        print(f(2))
+                        print(f(3))
+
+                        This will print
+                        [1]
+                        [1, 2]
+                        [1, 2, 3]
+
+                    because the default argument L ponts to a list object which is created at the time of function 
+                    definition.
+
+                    Note 3: 
+                    when the function definition was executed and the execution result was stored in 
+                    memory as a function object to which the name 'f' refers to. In that function object's local scope 
+                    a variable was defined named 'L' which were assigned a value to a list object which is 
+                    stored in somewhere else in the memory.
+
+                    * To do not fall into this pitfall you can omit using mutable objects as 
+                        default value to a parameter or you can do the following, 
+
+                        def f(a, L=None):
+                            if L is None:
+                                L = []
+                            L.append(a)
+                            return L
+
+            * Positonal and Keyword arguments and optional parameter
+                def func(pos_arg, kwarg_1='No value', kwarg_2=True):
+                    print(pos_arg, kwarg_1, kwarg_2)
+            
+                func('Required Positional Argument',
+                    kwarg_1='keyword argument for optional parameter kwarg_1')
+    
+                    this will print, 
+                        Required Positional Argument keyword argument for optional parameter kwarg_1 True
+                
+                In this exmaple,
+                1. 'pos_arg' is a required positional parameter ( / formal argument) 
+                2. 'kwarg_1' and 'kwarg_2' are optional parameters (/ formal arguments )
+                3. when we are calling the function, 
+                    the value passed at the first position is a positional argument and it is required
+                    in the second position, we are passing a keyword argument 'kwarg_1' = 'value'
+                    for the third, we did not pass any arguments and that is okay because it is optional. 
+
+            * Rules for passing arguments 
+                    1. all keyword arguments must come after all positional arguments from left to right 
+                        or it will throw exception 
+
+                    2. value to a positional parameter can also be passed with a keyword argument.
+                        for the previous example, we can pass value to positional parameter 'pos_arg' by, 
+
+                            func(pos_arg = 'Required Positional Argument') and it will work.
+
+                    3. All the keyword arguments passed must match one of the arguments accepted by the function, 
+                        and their order is not important. This also includes non-optional arguments.
+
+                            func(kwarg_1 = 'keword arg', pos_arg = 'pos arg')
+                            output:  pos arg keword arg True
+
+                    4. No argument may receive a value more than once.
+                        for the previous example, 
+                            func('This is for required positional parameter', pos_arg = 'Required Positional Argument')
+
+                            this function call will throw an error as we are passing two arguments for one parameter, 
+                            1 positional argument and 1 keyword argument.
+                            Error: func() got multiple values for argument 'pos_arg'
+
+
+            * Special parameters
+                Keyword parameters are also referred to as named parameters.
+                By default, arguments may be passed to a Python function either by position or explicitly by keyword. 
+                To restrict the way arguments can be passed,
+
+                A function definition may look like:
+                
+                    def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+                        -----------    ----------     ----------
+                            |             |                  |
+                            |        Positional or keyword   |
+                            |                                - Keyword only
+                            -- Positional only
+
+                where / and * are optional.
+
+                1. Positional-only parameters are placed before a / (forward-slash).
+                    If positional-only, the parameters' order matters, and the parameters cannot be passed by keyword.
+                    If there is no / in the function definition, there are no positional-only parameters.
+
+                2. Parameters following the / may be positional-or-keyword or keyword-only.
+                
+                3. To mark parameters as keyword-only, indicating the parameters must be passed by keyword argument, 
+                    place an * in the arguments list just before the first keyword-only parameter.
+
+                Perks:
+                    the names of positional-only parameters can be used in **kwargs without ambiguity.
+
+                As guidance:
+                    1. Use positional-only if you want the name of the parameters to not be available to the user. 
+                        This is useful when parameter names have no real meaning, if you want to enforce the order 
+                        of the arguments when the function is called or if you need to take some positional parameters 
+                        and arbitrary keywords.
+                    2. Use keyword-only when names have meaning and the function definition is more understandable by 
+                        being explicit with names or you want to prevent users relying on the position of the argument 
+                        being passed.
+                    3. For an API, use positional-only to prevent breaking API changes if the parameter's name is 
+                        modified in the future.
+
+
+
+            * Arbitrary Argument Lists - argument packing 
+                1. Final formal parameter of the form *name which receives a tuple containing the positional 
+                    arguments beyond the formal parameter list. 
+                2. Final formal parameter of the form **name is present, it receives a dictionary containing 
+                    all keyword arguments except for those corresponding to a formal parameter. 
+                3. *name must occur before **name.
+
+                def func(pos, kwarg='val', *args, **kwargs)
+                    *args packs all the arguments which are passed beyond all the positional parameters in a tuple
+                    **kwargs packs all the keyword arguments which are passed beyond all the keyword parameters 
+                        in a dictionary
+
+            
+            * Unpacking Argument Lists
+                1. unpacking a tuple and use elements as positional arguments
+                    *(1, 10) is equivalent to 1, 10
+
+                2. unpacking a dictiona ans use key:value pair as keyword arguments 
+                    **{'name': 'John', 'age': 25} is equivalent to  name='john', age=25
+
+
+            * Lambda Expressions
+                Small anonymous functions can be created with the lambda keyword. This function returns the sum of 
+                its two arguments: lambda a, b: a+b.
+                They are syntactically restricted to a single expression. Semantically, they are just syntactic 
+                sugar for a normal function definition. 
+                Like nested function definitions, lambda functions can reference variables from the containing scope:
+
+                    def make_incrementor(n):
+                        return lambda x: x + n
+                    
+                    f = make_incrementor(42)
+
+            * Documentation Strings
+                in short doc string describes an objects purpose, parameter, return value , exception type etc. 
+
+
+            * Function Annotations
+                Function annotations are completely optional metadata information about the types used 
+                by user-defined functions
+
+                    1. Parameter annotations are defined by a colon after the parameter name, followed by an 
+                        expression evaluating to the value of the annotation. 
+
+                    2. Return annotations are defined by a literal ->, followed by an expression, between the parameter 
+                        list and the colon denoting the end of the def statement
+
+
+            * skip body implementation by using pass keyword
+                def func():
+                    pass 
+
+            * functions with positional arguments
+                def hello_func(name, greetings):
+                    print(f'{greetings } { name }!')
+
+                hello_func('Protick', 'Hi')     # Hi Protick!
+        </p>
+
+        <h2>PEP 8 Coding styles</h2>
+        <p>
+            1. Use 4-space indentation, and no tabs.
+            2. 4 spaces are a good compromise between small indentation (allows greater nesting depth) 
+                and large indentation (easier to read). Tabs introduce confusion, and are best left out.
+            3. Wrap lines so that they don't exceed 79 characters.
+            4. Use blank lines to separate functions and classes, and larger blocks of code inside functions.
+            5. When possible, put comments on a line of their own.
+            6. Use docstrings.
+            7. Use spaces around operators and after commas, but not directly inside bracketing 
+                constructs: a = f(1, 2) + g(3, 4).
+            8. Name your classes and functions consistently; the convention is to use UpperCamelCase for classes and 
+                lowercase_with_underscores for functions and methods. Always use self as the name for the first method 
+                argument (see A First Look at Classes for more on classes and methods).
+            9. Don't use fancy encodings if your code is meant to be used in international environments. 
+                Python's default, UTF-8, or even plain ASCII work best in any case.
+            10. Likewise, don't use non-ASCII characters in identifiers if there is only the slightest chance people 
+                speaking a different language will read or maintain the code.
+        </p>
+    </main>
 </body>

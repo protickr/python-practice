@@ -44,3 +44,14 @@
 # def f(arg=i) says "make me a function f where the default value for arg is whatever i is right now". 
 # At the time of defining the function, i=5.
 
+def func(pos_arg, kwarg_1='No value', kwarg_2=True):
+    print(pos_arg, kwarg_1, kwarg_2)
+
+
+# func('Required Positional Argument',
+#      kwarg_1='keyword argument for optional parameter kwarg_1')
+
+# func(pos_arg = 'Required Positional Argument')
+# func('This is for required positional parameter', pos_arg = 'Required Positional Argument')
+func(kwarg_1 = 'keword arg', pos_arg = 'pos arg')
+
