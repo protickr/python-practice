@@ -1198,7 +1198,81 @@
                     print(f'{greetings } { name }!')
 
                 hello_func('Protick', 'Hi')     # Hi Protick!
-        </p>
+
+            * variable's scope chain, global and nonlocal statements
+
+                x = 'global x'
+                y = 'global y'
+                def outer():
+                    global x 
+                    x = 'outer x'
+                    y = 'outer y'
+                
+                    def inner():
+                        # nonlocal x
+                        nonlocal y 
+                        y = 'inner y'
+                        x = 'inner x'
+                        print(x, y)
+                    
+                    inner()
+                    print(x, y)
+                
+                outer()
+                print(x, y)
+                
+                Variable scope 
+                    where our variable can be accessed from within the program and what values those variables 
+                    hold in differnt contexts 
+                
+                    1. Local Scope 
+                        variable defined within a function body is called local variable and it is not 
+                        accessible outside of the function body or from the global scope 
+
+                    2. Global scope 
+                        variable defined in the top level of a module and also variable declared with 
+                        the global keyword. Global variable is available within the local scope of a function 
+                        which is defined in that global scope
+
+                    3. Local variable with the same name as a global variable will override the the global 
+                        variable within that local scope. 
+
+                    4. Though global variable can be accessed within a local scope, we can not reassign that 
+                        global variable. To reassign a global variable from within a local scope we have to 
+                        declare that global variable as 
+                            global var 
+                            var = 'new value'
+                        
+                    5. function parameter exists within the function's local scope 
+                    
+                    6. Builtins scope 
+                        to see all the built-in variables are defined and available in the global scope, 
+                            import builtins 
+                            print(dir(builtins))
+
+                    7. Enclosing scope 
+                        inner function closes on all the variable's of outer scope and that outer scope can be 
+                        local scope of another function 
+                        that local scope of the outer function is called enclosed scope
+
+                        you can access variables from enclosing scope like you accessed global variable within 
+                        a local scope. But to assign or change value of a variable from enclosing scope you have
+                        to declare that variable as, 
+                            nonlocal var 
+                            var = 'new value' 
+
+                Note
+                * global and nonlocal statement for a single variable name should not be combined 
+                    for that variable name's scope chain 
+                * do not override builtin names even if you are not prohibited by python.
+                * Python look up for a variable in the scope chain by the LEGB rule. It first look up for a 
+                    variable in Local scope then goes to Enclosing Scope then goes to Global scope and then 
+                    goes to Builtins scope. If it finds a variable in a scope it stops looking up further in
+                    the scope chain. If it does not find the variable in the whole scope chain it throws 
+                    a NameError exception.
+                
+
+                </p>
 
         <h2>Modules and standard library</h2>
         <p>
