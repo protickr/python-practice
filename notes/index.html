@@ -1200,6 +1200,100 @@
                 hello_func('Protick', 'Hi')     # Hi Protick!
         </p>
 
+        <h2>Modules and standard library</h2>
+        <p>
+            Module 
+                Python has a way to put definitions in a file and use them in a script or in an interactive
+                instance of the interpreter. Such a file is called a module; definitions from a module can 
+                be imported into other modules or into the main module
+                A module is a file containing Python definitions and statements. The file name is the 
+                module name with the suffix .py appended
+
+                * Python searches for modules in the path list defined in sys.path
+                * Currently executing file's path is also automatically added to the sys.path list. 
+
+                * how to import a module 
+                    all statements defined in a module are executed before it is actually imported into antoher module or scripts
+
+                    1. import my_module 
+                        you can use variable or functions defined in a module by 
+                            module_name.variable 
+                            module_name.function()
+
+                    2. import my_module as mm 
+                        'my_module' will be imported with the name 'mm'
+                        mm.varible 
+                        mm.function()
+
+                    3. from my_module import variable, function 
+                        only selected variable and function will be imported into a module other than the 
+                        whole module 
+
+                    4. from my_module import variable as var, function as func 
+                        selected imports will be named as given while being imported 
+
+                    5. from my_module import * 
+                        imports everything from a module 
+                        Not recommended as it convolutes the global namespace
+
+                
+
+        </p>
+
+        <h2>Devlopment tools, package installer and Virtual environments</h2>
+        <p>
+
+            * Package installer for python - PIP 
+                we can use this package manager tool to install, uninstall, upgrade packages/modules
+                
+                1. pip search package-name 
+                    searches for a package with the given package-name and returns package list 
+
+                2. pip list 
+                    lists out packages installed for current environment 
+                
+                3. pip install package-name 
+                    installs package named 'package-name' into the current environment 
+                    
+                4. pip install package-name=version 
+                    install package with specified version 
+
+                5. pip list --outdated (or -O)
+                    lists out outdated packages installed in the current environment 
+
+                6. pip install --upgrade (or -U) package-name 
+                    upgrades a package to the latest version 
+                    
+                7. pip freeze > requirements.txt 
+                    lists out currently installed packages in the active environment to requirements.txt file 
+
+                8. pip instlal -r requirements.txt 
+                    install all packages listed in the requirements.txt file to the currently active environment. 
+
+
+            * virtual envirnments 
+                python execution environment with chosen python interpreter and modules 
+                there are many tools available to create a virtual environment such as venv, 
+                virtualenv, pyenv, anaconda etc. 
+
+                * virtualenv 
+                    1. pip instlal virtualenv 
+
+                    2. virtualenv virtaul-environment 
+                        will create a virtual environment named 'virtaul-environment' with the system default 
+                        python interpretor set as default interpreter for the newly created virtual environment 
+
+                    3. virtualenv -p path/to/python/interpreter/executable virtual-environment 
+                        will create a virtual environment which has its interpreter set to the specified interpreter
+                    
+                    4. Activate a virtual environment 
+                        source virtual-environment-directory/bin/activate 
+
+                    5. deactivate 
+                        deactivates the currently active virtual environment 
+                    
+        </p>
+
         <h2>PEP 8 Coding styles</h2>
         <p>
             1. Use 4-space indentation, and no tabs.
