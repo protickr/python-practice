@@ -988,14 +988,76 @@
                         for n in my_gen: 
                             print(n)                # 1 4 9 16 each element on a new line
             
-                            
+
             * tuple 
                 there is no syntax for tuple comprehension but you can do it with tuple() constructor 
                 combined with generator expression 
                 
                     my_tup = tuple(my_gen)
                     print(my_tup)       # (1, 4, 9, 16)
+
+
+            <strong> Sorting </strong>
+            Lists 
+                li = [1, 2, 3, 4]
+
+                1. using list.sort() 
+                    li.sort()
+                        sorts list in place mutating the original list 
+                        returns None as return value 
+                        sorts in ascending order by default 
+
+                    li.sort(reverse=True)
+                        sorts in descending order 
+
+                2. using sorted() function 
+                    nli = sorted(li) 
+                        returns a new sorted list 
+                        sorts in ascending order by default 
+
+                    nli = sorted(li, reverse=True)
+                        sorts in descending order 
+
+                * sort() method is not available on any other sequence type objects other than lists 
+                * tuples, sets and dictionaries can be sorted using sorted() method 
+
+            Dictionary 
+                1. sd = sorted(dict_obj)
+                    sorts the dict_obj based on the keys and returns the sorted dictionary  
+
+
+            * sorted also accepts a keyword argument 'key' which takes a function as a value 
+                the value returned by that function will be used during sorting the sequence 
                 
+                li = [-6, -5, -4, 1, 2, 3]
+                
+                to sort li list based on absoulte value of the elements we can pass builtin abs function as 
+                key value 
+                    nli = sorted(li, key=abs)
+
+            Objects 
+                1. sort using a custom sorter function 
+                    class Employee():
+                        def __init__(self, name, age):
+                            self.name = name
+                            self.age = age 
+                
+                    def sorter_func(emp):
+                        return emp.age
+                    
+                    
+                    e1 = Employee('Corey', 26)
+                    e2 = Employee('Jonas', 24)
+                    emps = [e1, e2]
+                    
+                    sorted_emps = sorted(emps, key=sorter_func)
+                    print(sorted_emps[0].age, sorted_emps[1].age)   # 24 26
+                    
+                2. sort using builtin attrgetter function 
+
+                    from operator import attrgetter 
+                    sorted_emps = sorted(emps, key=attrgetter('age'))
+                    print(sorted_emps[0].age, sorted_emps[1].age)   # 24 26
         </p>
 
         <h2>Loops</h2>
