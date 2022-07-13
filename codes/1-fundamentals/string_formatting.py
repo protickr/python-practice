@@ -52,7 +52,44 @@
 # print(txt)      # 10,000,000.00
 
 # date formatting 
-from datetime import datetime
-a = datetime(2022, 1, 11)
-birthday = '{0:%B %d, %Y}'.format(a)
-print(birthday)     # January 11, 2022
+# from datetime import datetime
+# a = datetime(2022, 1, 11)
+# birthday = '{0:%B %d, %Y}'.format(a)
+# print(birthday)     # January 11, 2022
+
+
+# f'string 
+
+# with variable 
+# first_name = 'Protick'
+# last_name = 'Roy'
+# txt = f'My name is {first_name} {last_name}'
+# print(txt)      # My name is Protick Roy
+
+# with dictionary
+# person = {'name': 'Jenn', 'age': 23}
+# txt = f'My name is {person["name"]} and I am {person["age"]} years old'
+# print(txt)      # My name is Jenn and I am 23 years old
+
+
+# you can also perform calculation within f'string's placeholder 
+# txt = f'4 times 11 is  {4*11}'
+# print(txt)      # 4 times 11 is  44
+
+
+# number padding 
+# num = 3 
+# txt = f'{num:02}'
+# print(txt)      # 03
+
+# floating point formatting 
+# pi = 3.141592
+# txt = f'PI to 4 decimal place with approximation, {pi:.4f}'
+# print(txt)      # PI to 4 decimal place with approximation, 3.1416
+
+# date formatting 
+# from datetime import datetime
+
+# a = datetime(2022, 1, 11)
+# date_str = f'the day was, {a:%B %d, %Y}'
+# print(date_str)
