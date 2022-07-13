@@ -604,6 +604,69 @@
                 
         </p>
 
+        <h2>Error Handling, Duck Typing, LBYL, EAFP</h2>
+        <p>
+            * Error handling 
+                try: 
+                    # statements that might produce exception
+
+                catch NameError as ne: 
+                    # notify user of the error that occurred 
+
+                catch Exception as e:
+                    # exception of type Exception is caught 
+                    # do what need to be done 
+
+                else: 
+                    # this block executes if there was no error or no catch block was executed 
+
+                finally: 
+                    # this block executes always 
+
+                * else and finally block are optional 
+                * you can use more that one catch block and differnt Exception / Error class in different blocks.
+
+
+            * Duck Typing 
+                it is a pythonic (coding style) approach. what it means by duck typing is you assume if an object
+                walks like a duck and quacks like a duck then it is a duck. 
+                we do not care about the object's type we are only interested in its functionality.
+                goal of this approach is to create generalized code construct so that the construct can operate 
+                on as much much object as it can, regardless of object type. 
+                keeps code duplication to minimum. 
+                
+                One major drawback of this approach is that over generalization might lead to more exception 
+                than anticipated. 
+
+            * LBYL
+                To vear away from exceptions we often resort to a certain coding style where we use guard clauses
+                to prevent that exception from happening. This approach in generally followed in many other 
+                programming languages and we call it 'Look Before You Leap' or LBYL in short.
+                    e.g., 
+                        if hasattr(obj, 'attribute_name'):
+                            if callable(obj.attribute_name):
+                                obj.attribute_name()
+
+            * EAFP
+                But python community recommends another way to deal with the same problem called 
+                'Easier to Ask for Forgiveness than Permission' or EAFP. In this approach we use 
+                try catch block to perform an action and catch the error and handle it as needed.
+                    e.g., 
+                        try:
+                            obj.attribute_name()
+                        catch Exception as e: 
+                            print(e)
+
+                why EAFP is pythonic and LBYL is not ?
+                    1. EAFP helps reduce the execution time as python is a bit slow compared to other compilied 
+                        languages. Checking with multiple gurad clauses is more heavy on the processor unit than 
+                        catching exception with one or more catch blocks. 
+
+                    2. Race condition 
+                        LBYL might lead to race condition
+                        always use try catch while accessing resources rather than conditionals.
+        </p>
+
         <h2>Python Builtin Data Structures</h2>
         <p>
             <strong>Lists</strong>  
