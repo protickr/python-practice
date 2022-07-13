@@ -165,6 +165,89 @@
                         message = f'{greetings}, {name}. Welcome!'
                         print(message)      # Hey, John. Welcome!
 
+
+            * String formatting 
+                1. string concatenation using + operator 
+                2. string.format() method
+
+                    name = 'Protick'
+                    age = 28 
+
+                    * placeholder wihtout index 
+                        txt = 'I am {} my age is {}'.format(name, age)
+                        print(txt)      # I am Protick my age is 28
+
+                    * placeholder with index 
+                        txt = ' I am {1} my age is {0}'.format(age, name)
+                        print(txt)      # I am Protick my age is 28
+
+                        element = '&lt;{0}> {1} &lt;/{0}>'.format('p', 'paragraph text')
+                        print(element)  # &lt;p> paragraph text &lt;/p>
+                        
+                    * with dictionary
+                        person = { 'name': 'Protick', 'age': 28 }
+                        txt = 'I am {0[name]} my age is {1[age]}'.format(person, person)
+                        or, 
+                        txt = 'I am {0[name]} my age is {0[age]}'.format(person)
+                        print(txt)      # I am Protick my age is 28
+
+                    * with list
+                        info = ['Protick', 28]
+                        txt = 'I am {0[0]} my age is {0[1]}'.format(info)
+                        print(txt)      # I am Protick my age is 28
+
+                    * with object attributes 
+                        class Person():
+                            def __init__(self, name, age):
+                                self.name = name
+                                self.age = age 
+
+                        p1 = Person('Protick', 28)
+                        txt = 'I am {0.name} my age is {0.age}'.format(p1)
+                        print(txt)      # I am Protick my age is 28
+
+                    * with keyword argument 
+                        txt = 'I am {name} my age is {age}'.format(name='Protick', age=28)
+                        print(txt)      # I am Protick my age is 28
+
+                        * dictionary unpacking to generate keyword arguments 
+                            person = {'name': 'Protick', 'age': 28}
+                            txt = 'I am {name} my age is {age}'.format(**person)
+                            print(txt)      # I am Protick my age is 28
+
+                    * number formatting 
+                        1. add padding to number in a placeholder   
+                            txt = '{0:02}'.format(8)
+                            print(txt)      # '08'
+                            
+                        2. digits after decimal point of a float 
+                            txt = '{0:.4f}'.format(3.141592)
+                            print(txt)      # 3.1416
+
+                            * also perfomrs approximation
+
+                        3. add comma seperator and digits after decimal point to a number 
+                            txt = '{0:,.2f}'.format(10000000)
+                            print(txt)      # 10,000,000.00
+                            
+
+                    * data formatting 
+                        with a date object 
+                            from datetime import datetime
+                            a = datetime(2022, 1, 11)
+                            birthday = '{0:%B %d, %Y}'.format(a)
+                            print(birthday)     # January 11, 2022
+                    
+                    *** There must not be any whitespace between placeholder curly braces and the
+                        formatting string 
+                            e.g., 
+                                '{ 0:02 }'.format(7) ❌
+                            right form would be, 
+                                '{0:02}'.format(7) ✔
+
+                
+                3. f'string 
+
         </p>
 
         <h2>Built in functions</h2>
@@ -900,7 +983,7 @@
                         print(john)     # {'name': 'John', 'country': 'Bangladesh'}
         </p>
 
-        <h2>Slicing, Soritng, Comprehension</h2>
+        <h2>Slicing, Sorting, Comprehension</h2>
         <p>
             <strong>Slicing</strong>
             extract certain elements from lists and strings 
@@ -1433,7 +1516,7 @@
                 
 
         </p>
-
+ 
         <h2>Modules and standard library</h2>
         <p>
             Module 
