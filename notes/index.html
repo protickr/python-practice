@@ -319,6 +319,14 @@
             
             * pow(base, exponent)
                 pow(2, 10)  # 1024 
+            
+            * to help understand the MRO of a subclass we can use help() function 
+                help(Subclass)
+
+            * isinstance(obj, Class)
+
+            * issubclass(ChildClass, ParentClass)
+
         </p>
 
         <h2>Operators</h2>
@@ -642,6 +650,8 @@
             * Error handling 
                 try: 
                     # statements that might produce exception
+                    # or raise exception manually by 
+                        raise ExceptionType
 
                 catch NameError as ne: 
                     # notify user of the error that occurred 
@@ -892,7 +902,7 @@
                     interesting but I do not know where to use this technique
 
 
-                    
+
                 * namedtuple             
                     * tuples
                         color = (55, 155, 255)
@@ -1634,7 +1644,302 @@
                 
 
         </p>
- 
+
+        <h2>Class and OOP</h2>
+        <p>
+            * how to create a class in python ?
+                class Employee:
+                    num_of_emps = 0
+                    raise_amount = 1.04
+
+                    def __init__(self, first, last, pay):
+                        self.first = first
+                        self.last = last
+                        self.pay = pay
+                        self.email = first + last + "@gmail.com"
+
+                        Employee.num_of_emps += 1
+
+                    def fullname(self)->str:
+                        return f'{self.first} {self.last}'
+
+                    def apply_raise(self):
+                        self.pay = int(self.pay * self.raise_amount)
+
+                    @classmethod
+                    def from_string(cls, emp_str):
+                        first, last, pay = emp_str.split('-')
+                        return cls(first, last, pay)
+
+                    @classmethod 
+                    def set_raise_amount(cls, amount):
+                        cls.raise_amount = amount
+
+                    @staticmethod 
+                    def is_workday(day):
+                        if (day.weekday() == 5 or day.weekday() == 6):
+                            return False 
+                        return True
+
+
+                1. we can create an instance / object from a class by, 
+                        emp_1 = Employee('Protick', 'Roy', 10000)
+                        emp_2 = Employee('Test', 'User', 15000)
+                    
+                    * when we create instance of a class that instance is passed to the constructor __init__() 
+                        method automatically as the first argument so we do not need to pass it explicitly.
+                    * the __init__() method will run automatically upon creating the instance
+                    * constructor method creates and initializes instance variables using the given parameter
+
+                2. we can also create and assign value to new class attributes using the object reference 
+                    emp_1.email = emp_1.first + emp_1.last + "@gmail.com"
+
+                3. instance variables contain data that is unque to each instance, 
+                    instance varibales are also called attributes 
+
+                4. Any instance method called using an object reference passes the object reference 
+                    as the first argument to that method                 
+                    each method inside a class will take the instance as first argument automatically
+                            emp_1.fullname() 
+                        passes the instance as first argument to the fullname() method automatically 
+
+                5. we have to pass the instance/object reference as first argument specifically when 
+                    calling an instance method by the Class name 
+                        Employee.fullname(emp_1)
+
+
+            * Class variables 
+                * class variables are variables that are shared among all instance of a class 
+                    e.g.,   num_of_emps, raise_amount
+
+                * instance variables are unique to each instance
+                    e.g.,   self.first, self.last, self.pay
+
+                *  In apply_raise() method we used 'self.raise_amount' so that we can access the general 
+                    raise_amount (class variable) and if need be then we can reassign the raise_amount 
+                    using instance reference (then raise_amount becomes instance variable) and access that 
+                    raise_amount (instance variable) specific to that instance without changing the code.
+
+                * In Employee class's __init__() method we have 'Employee.num_of_emps += 1' which 
+                    increments each time an instance is created using that class. Here we are using Class reference 
+                    to access the class variable 'num_of_emps' because in no circumstance 
+                    we want the 'num_of_emps' to become specific to any instance
+
+                6. when we reassign a class variable with an instance reference then it overrides the class 
+                    variable and creates a new instnace variable with the same name as the class varaible 
+                    think of it as how global variable can be accessed in a local scope but re-assignment would 
+                    lead to creating a new variable in that local scope with the same name as the global variable
+                    
+                7. we can access class variable through the class name itself or through any instance of the class, 
+                    how ?
+                    because of scope chain 
+                    first it looks if the instance has an instance variable named raise_amount if not then 
+                    it looks for the variable in the class from which it was created
+
+
+            * class methods and static methods 
+
+                * 3 types of methods 
+                    regular methods, class methods, static methods
+
+                1. regular method takes the instance reference as the first argument 
+
+                2. class method takes the class reference as the first argument class method can be created by 
+                    adding a decorator '@classmethod' to the top of a method definition inside a class 
+
+                3. static method takes neither object nor class reference as first argument by default 
+                    they are just regular functions which have some logical conneciton to the class itself 
+                    static method can be declared with '@staticmethod' decorator
+                    * static method does not depend on any class variable or instance variable 
+                    * so if you need a method inside a class which does not need instance or class reference 
+                        then declare that method as static method
+
+
+                * in this exapmle we have two class methods called 'from_str(cls, emp_str)' which works as an 
+                    alternative constructor it takes a string and creates a new Employee object and returns it. 
+                    Also the class reference is passed to it automatically as the first argument and 
+                    'set_raise_amount(cls, amount)' takes an amount as an argument set the class variable raise_amount
+
+                        emp_str_1 = 'John-Doe-20000'
+                        emp_3 = Employee.from_string(emp_str_1)
+                    
+                    * you can also call class methods with instance reference but that does not make sense and 
+                        it is rarely used 
+                            emp_1.set_raise_amount(1.01)
+                        this will change the class variable raise_amount same as invoking class method with 
+                        the class name did
+
+                * in this example we have a static method called 'is_workday(day)'
+                    which takes a date object as argument and it returns a day is weekday or not 
+                    Also it does not take any reference of instance or class as first arguments like 
+                    instance method and class method did. 
+                    we can invoke a class method using class or instance reference either way does not make 
+                    any difference 
+
+                        import datetime
+                        my_date = datetime.date(2016, 7, 10)
+                        Employee.is_workday(my_date)
+
+
+            * Class inheritance 
+
+                class Employee: 
+                    raise_amount = 1.04
+            
+                    def __init__(self, first, last, pay):
+                        self.first = first
+                        self.last = last
+                        self.pay = pay
+                        self.email = f'{first}.{last}@email.com'
+                
+                    def fullname(self)->str:
+                        return f'{self.first} {self.last}'
+                
+                    def apply_raise(self):
+                        self.pay = int(self.pay * self.raise_amount)
+                
+                class Developer(Employee):
+                    raise_amount = 1.10
+                    
+                    def __init__(self, first, last, pay, prog_lang):
+                        super().__init__(first, last, pay)
+                        self.prog_lang = prog_lang
+                
+                
+                class Manager(Employee):
+                
+                    def __init__(self, first, last, pay, employees=None):
+                        super().__init__(first, last, pay)
+                        if employees is None: 
+                            self.employees = []
+                        else: 
+                            self.employees = employees
+                
+                    def add_emp(self, emp):
+                        if emp not in self.employees:
+                            self.employees.append(emp)
+                
+                    def remove_emp(self, emp):
+                        if emp in self.employees:
+                            self.employees.remove(emp)
+                
+                    def print_emps(self):
+                        for emp in self.employees: 
+                            print('-> {}'.format(emp.fullname()))
+                
+                
+                dev_1 = Developer('Protick', 'Roy', 10000, 'Python')
+                dev_2 = Developer('Test', 'User', 15000, 'JavaScript')
+                mgr_1 = Manager('Sue', 'Smith', 90000, [dev_1])
+                
+                
+                * inheritance allows us to inherit attributes and methods from a parent class 
+                    we can create subclasses and get all the functionality of our parent class 
+                    and then we can overwrite or add completely new functionality witout affecting 
+                    the parent class in any way  
+                
+                * when python does not find a specific method in a subclass then it walks up the 
+                    chain of inheritance until it finds what it is looking for this chain is called 
+                    Method Resolution Order (MRO)
+
+                * subclass also inherits parent's constructor method __init__()
+                
+                * every class in python inherits from the base builtins.object 
+
+                * changing a class variable in subclass has no effect on the parent class 
+
+
+            * Special / Magic / dunder methods 
+                class Employee: 
+                raise_amount = 1.04
+                
+                    def __init__(self, first, last, pay):
+                        self.first = first
+                        self.last = last
+                        self.pay = pay
+                        self.email = f'{first}.{last}@email.com'
+                
+                    def fullname(self)->str:
+                        return f'{self.first} {self.last}'
+                
+                    def apply_raise(self):
+                        self.pay = int(self.pay * self.raise_amount)
+                
+                    def __repr__(self):
+                        return f'Employee({self.first}, {self.last}, {self.pay})'
+                
+                    def __str__(self):
+                        return f'{self.fullname()} - {self.email}'
+                
+                    def __add__(self, other):
+                        return self.pay + other.pay
+                
+                    def __len__(self):
+                        return len(self.fullname())
+                
+                emp_1 = Employee('Protick', 'Roy', 10000)
+                emp_2 = Employee('Test', 'User', 15000)
+                
+                print(emp_1 + emp_2)
+                print(len(emp_1))
+                
+                * this methods emulates builtins behaviours in python 
+                
+                * __repr__() is called when we do repr(obj)
+                    output of this method is meant to be used by developers to logging debugging 
+                    from this method return a string that can be used to recreate that object on which it was called
+                    you must implement this method even if you do not implement __str__()
+                
+                * __str__() is called when we do str(obj)
+                    output of this method is meant to be used by the end user, readable representation of an object 
+                
+                * we can also implement operator overloading with special methods 
+                    such as to overload the '+' operator's behavior for objects of a class we can 
+                    define __add__() method in that class  
+                    
+            * Property getter, setter 
+                class Employee: 
+
+                    def __init__(self, first, last):
+                        self.first = first
+                        self.last = last
+                        # self.email = f'{first}.{last}@email.com'
+                
+                    # getter
+                    @property
+                    def fullname(self)->str:
+                        return f'{self.first} {self.last}'
+                
+                    # setter
+                    @fullname.setter
+                    def fullname(self, name):
+                        self.first, self.last = name.split(' ')
+                        
+                    # deleter 
+                    @fullname.deleter 
+                    def fullname(self):
+                        print('Deleting fullname attribute!')
+                        self.first = None 
+                        self.last = None
+                
+                    @property
+                    def email(self):
+                        return f'{self.first}.{self.last}@email.com'
+                
+                
+                emp_1 = Employee('John', 'Smith')
+                emp_1.fullname = 'Protick Roy'
+                
+                print(emp_1.first)
+                print(emp_1.email)
+                print(emp_1.fullname)
+                del emp_1.fullname
+                print(emp_1.fullname)
+                
+                * property decorator allows us to define a method and access it like a attribute
+
+        </p>
+
         <h2>Modules and standard library</h2>
         <p>
             Module 
