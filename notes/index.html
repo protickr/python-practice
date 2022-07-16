@@ -1938,7 +1938,56 @@
                 print(emp_1.fullname)
                 
                 * property decorator allows us to define a method and access it like a attribute
-                * protectected and private attribute by _, __ 
+                * private attribute by _ (it is by convention)
+                * name mangling with __ (name is actually changed by python to _classattribute__variable_name)
+
+
+                * understanding class instantiation
+                    class Foo: 
+                        def __init__(self, x, y = 0):
+                            self.x = x
+                            self.y = y
+                    
+                    Foo(1, y=2)
+                    print(type(Foo))
+
+                1. __init__ doesn't return an object, but calling Foo(1, y=2) does return an object. 
+                
+                2. __init__ expects a self parameter, but there is no such parameter when calling Foo(1, y=2).
+                
+                3. Foo is a class, but classes in Python are objects too! Classes, functions, methods and instances 
+                    are all objects and whenever you put parentheses after their name, 
+                    you invoke their __call__ method. 
+
+                4. So Foo(1, y=2) is equivalent to Foo.__call__(1, y=2). That __call__ is the one defined by 
+                    Foo's class. What is Foo's class ? 
+                        &lt;class 'type'&gt;
+                    Foo is an instance of 'type Class' and calling Foo() (or Foo.__call__()) 
+                    returns an object of class Foo 
+
+                5. So when we call Foo() we invoke type.__call__() 
+                    what does it look like ? 
+                    let's look at it as a stripped down version, 
+                    [this is not an exact version that is implemented by PyPi but it is equivalent]
+
+                        def __call__(obj_type, *args, **kwargs):
+                            obj = obj_type.__new__(*args, **kwargs)
+                            if obj is not None and issubclass(obj, obj_type):
+                                obj.__init__(*args, **kwargs)
+                            return obj
+
+                6. __new__ allocates memory for the object, constructs it as an “empty” object and then __init__ 
+                    is called to initialize it.
+
+                    * It should be noted that while __new__ is a static method, you don't need to declare it with 
+                        @staticmethod - it is special-cased by the Python interpreter.
+
+                7. here 'obj_type' refers to the class 'Foo' (class is also an object remember ?) and when you call 
+                    a method the object reference is automatically passed as first argument. 
+
+                8. we did not define __new__() in class 'Foo' either so, type.__new__() is called. 
+
+            
                 
 
         </p>
