@@ -1942,14 +1942,14 @@
                 * name mangling with __ (name is actually changed by python to _classattribute__variable_name)
 
 
-                * understanding class instantiation
-                    class Foo: 
-                        def __init__(self, x, y = 0):
-                            self.x = x
-                            self.y = y
-                    
-                    Foo(1, y=2)
-                    print(type(Foo))
+            * understanding class instantiation
+                class Foo: 
+                    def __init__(self, x, y = 0):
+                        self.x = x
+                        self.y = y
+                
+                Foo(1, y=2)
+                print(type(Foo))
 
                 1. __init__ doesn't return an object, but calling Foo(1, y=2) does return an object. 
                 
@@ -1987,9 +1987,418 @@
 
                 8. we did not define __new__() in class 'Foo' either so, type.__new__() is called. 
 
+        </p>
+
+        <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
+        <p>
+            * First Class Function 
+                A programming language said to have first class function if treats functions as first-class citizens 
+
+            * first-class citizen 
+                A first class citizen (sometimes called first-class objects) in a programming language is an 
+                entity which supports all the operations generally available to other entities. 
+                These operations typically include being passed as an argument, returned from a function 
+                and assigned to a variable. 
+                if functions are treated as values
             
+            * higher order function 
+                if a function takes another function as argument or return a function then it is called a 
+                higher order functionmap() is a higher order function becaues it takes a callback function 
+                as an argument.
+
+                Example 1: first class function
+                            def square(x):
+                                return x * x 
+                    
+                            f = square
+                            print(square)
+                            print(f(5))
                 
 
+                Example 2.1: higher order function
+                            def square(num):
+                                return num * num
+                    
+                            def cube(num):
+                                    return num * num * num
+                        
+                            # map_to() is a higher order function as it takes mapper function's as an argument
+                            def map_to(mapper, nums):
+                                res = []
+                                for num in nums:
+                                    res.append(mapper(num))
+                    
+                                return res
+                
+                            nums = [1, 2, 3, 4]
+                            res = map_to(cube, nums)
+                            print(res)
+
+
+                Example 2.2: Higher order function 
+                            def log_message(msg):
+                                def print_log():
+                                    print("Log: ", msg)
+
+                                # log_message() is a higher order function because it returns print_log() function
+                                return print_log
+
+                            log = log_message("This message need to be logged !")
+                            log()
+
+
+
+            * Closure 
+                In simple terms, a closure is an inner function that remember and has access to variabless in 
+                the local scope in which it was created, even after the outer function has finished executing
+
+                * Exmaple 1: 
+                            def outer_func():
+                                message = 'hi'
+                                def inner_func():
+                                        print(message)
+                                return inner_func
+
+                            func = outer_func()
+                            func() # func == inner_func
+
+                Example 2: 
+                            def tag(t):
+                                def content(c):
+                                    return f'&lt;{t}>{c}&lt;/{t}>'
+                                return content
+
+                            h1 = tag('h1')
+                            h1_element = h1('This is heading level 1')
+                            print(h1_element) # &lt;h1>This is heading level 1&lt;/h1>
+                
+                
+                Example 3: 
+                # takes a function and inject logging functionality in it 
+
+                            import logging 
+                            logging.basicConfig(filename="example.log", level=logging.INFO)
+                            
+                            def logger(func):
+                                def log_func(*args):
+                                    logging.info(f'Running: {func.__name__} with arguments: {args}')
+                                    print(func(*args))
+                                return log_func
+                                
+                            def add(x, y):
+                                return x + y
+                            
+                            def multiply(x, y):
+                                return x * y
+                            
+                            log_add = logger(add)
+                            log_mul = logger(multiply)
+                            
+                            log_add(10, 20)
+                            log_mul(10, 20)
+            
+            
+            * Decorator 
+                a decorator is a function that takes another function as an argument, adds some kind of 
+                functionality and then returns another function without altering the source code of original 
+                function that we passed in to the decorator 
+
+                    def decorator_function(original_function):
+                        def wrapper_function():
+                            print(f'wrapper function ran before executing {original_function.__name__}')
+                            return original_function()
+                        return wrapper_function
+                    
+                    def display():
+                        print('display function ran')
+                    
+                    display = decorator_function(display)
+                    display()
+            
+
+                * in python we can achieve the same as the previous code example by, 
+
+                    def decorator_function(original_function):
+                        def wrapper_function():
+                            print(f'wrapper function ran before executing {original_function.__name__}')
+                            return original_function()
+                        return wrapper_function
+                    
+                    @decorator_function
+                    def display():
+                        print('display function ran')
+                    
+                    @decorator_function
+                    def display_info(name, age):
+                        print(f'display info ran with arguments {name, age}')
+                    
+                    display()
+                    display_info('John', 25)
+                
+
+                * so @decorator keyword replaces original function with wrapper function and takes original 
+                    function as its first argument automatically 
+
+                * so now, to pass argument to the wrapper function we need to define wrapper function with 
+                    parameters that can recieve multiple positional and keyword arguments we can do so by, 
+
+                        def decorator_function(original_function):
+                            def wrapper_function(*args, **kwargs):
+                                print(f'wrapper function ran before executing {original_function.__name__}')
+                                return original_function(*args, **kwargs)
+                        
+                            return wrapper_function
+                        
+                        @decorator_function
+                        def display():
+                            print('display function ran')
+                        
+                        @decorator_function
+                        def display_info(name, age):
+                            print(f'display info ran with arguments {name, age}')
+                        
+                        display()
+                        display_info('John', 25)
+                        
+            
+            * python classes as decorators 
+                class decorator_class(object):
+                    def __init__(self, original_function):
+                        self.original_function = original_function
+                
+                    def __call__(self, *args, **kwds):
+                        print(f'call method executed before executing {self.original_function.__name__}')
+                        return self.original_function(*args, **kwds)
+                
+                
+                @decorator_class
+                def display():
+                    print('display function ran')
+                
+                @decorator_class
+                def display_info(name, age):
+                    print(f'display info ran with arguments {name, age}')
+                
+                display()
+                display_info('John', 25)
+            
+            
+            * practical application of decorators 
+                from functools import wraps
+                def logger(orig_func):
+                    import logging
+                    logging.basicConfig(filename=f'{orig_func.__name__}.log', level=logging.INFO)
+                
+                    @wraps(orig_func)
+                    def wrapper(*args, **kwargs):
+                        logging.info('ran with arguments {} and keword arguments {}'.format(args, kwargs))
+                        return orig_func(*args, **kwargs)
+                    return wrapper
+                
+                def timer(orig_func):
+                    import time
+                
+                    @wraps(orig_func)
+                    def wrapper(*args, **kwargs):
+                        t1 = time.time()
+                        result = orig_func(*args, **kwargs)
+                        execution_time = time.time() - t1
+                        print(f'{orig_func.__name__} ran in {execution_time} seconds')
+                        return result
+                    return wrapper
+                
+                @timer
+                @logger
+                def display():
+                    print('display function ran')
+                
+                @timer
+                @logger
+                def display_info(name, age):
+                    print(f'display info ran with arguments {name, age}')
+                
+                display()
+                display_info('John', 25)
+
+                # 1. functool's wraps is a decorator that takes the original function as an argument and 
+                        changes the returned wrapper function's name to the original function's name 
+                # 2. in case of stacked decorators like in the previous example @timer and @logger were 
+                        stacked on top of each other. The decorator that is closest to the original function 
+                        is executed first.
+            
+            
+            * decorators that take arguments 
+                write another function and recieve arguments and define the decorator function as an inner function.
+                Recive and use the arguments in the inner functions and return the decorator function from it.
+
+                def prefix_decorator(prefix): # like this function 
+                    def decorator_function(original_function):
+                        def wrapper_function(*args, **kwargs):
+                            print(f'{prefix}: {original_function.__name__}')
+                            return original_function(*args, **kwargs)
+                        return wrapper_function
+                    return decorator_function
+                
+                @prefix_decorator('TESTING: ') # received arguments 
+                def display_info(name, age):
+                    print(f'display info ran with arguments {name, age}')
+                
+                display_info('John', 25)
+                
+                
+            * Generator
+                generator functions are a special kind of function that return a lazy iterator. 
+                These are objects that you can loop over like a list. However, unlike lists, lazy iterators 
+                do not store their contents in memory
+
+                generators do not hold the entire result in memory it yields one result at a time 
+                it waits for us to ask for the next result
+ 
+                    def square_nums(nums):
+                        result = []
+                        for i in nums:
+                            result.append(i * i) 
+                        return result
+
+                    nums = [1, 2, 3, 4]
+                    snums = square_nums(nums)
+
+                    * to transform the previous example to generator 
+                        def square_nums(nums):
+                            for i in nums:
+                                yield(i * i) 
+
+                        nums = [1, 2, 3, 4]
+                        snums = square_nums(nums)
+
+                    * to ask for the next result we have to use, 
+                        next(generator object) 
+
+                        next(snums) == 1
+                        next(snums) == 4
+                        next(snums) == 9
+                        next(snums) == 16
+                        next(snums)) == StopIteration exception 
+                        thrown as we reach the end of a generator; i.e., generator is exhausted
+
+                    * 'yield' returns a generator object
+
+                * Iterate a generator using 'for' loop
+                    for i in snums: 
+                        print(i)
+                    * for loop knows when to stop iteration or when generator is exhausted 
+                    
+                    * we can also rewrite the previous code example with while loop in that case we have to 
+                        manually handle the StopIteration exceptin like so, 
+                        while True: 
+                            try:
+                                print(next(snums))
+                            except StopIteration as e: 
+                                break
+                
+                * Generator expression 
+                    * list comprehension 
+                        sqr_nums = [ n*n for n in nums]
+
+                    * generator expression 
+                        gen_sqr_nums = (n*n for n in nums)
+                        
+                        * 'gen_sqr_nums' holds a generator object on which we have to call next() to iterate 
+                            through it. or we can convert the generator object to a list which will diminish the
+                            advantage of using a generator over a list
+                            li = list(gen_sqr_nums)
+                            
+                        * generator expression returns a generator object
+
+                * Advantage of using a generator over a list 
+                    1. List stores all the values of a sequence in a list which consumes memory space 
+                    2. Generator does not store all the values in memory it remembers the current state and 
+                        computes the next value as we call next() on it. 
+                    3. In list comprehension it computes and stores all the computed values in a list 
+                        which takes more time compared to generator expression as it just returns a generator 
+                        object which computes the value when asked to.
+
+
+            * Iterator 
+                an iterator is an object with a state so that it remembers where it is during iteration and 
+                iterator also know how to get their next value. 
+                They get their next value with a __next__() method 
+            
+                * iterables 
+                    an iterable means it is something that can be looped over 
+                    for example a book with multiple pages can be considered as an iterable as we can turn 
+                    the pages to traverse through all the pages
+
+                * iterable vs iterator example 
+                    * A list is iterable but not an iterator 
+                        nums = [1, 2, 3, 4]
+                
+                    * you can also iterate through sets, tuples, dictionaries, generators, files etc,
+                        how to determine if something is iterable ?
+                            to something to be an iterable it needs to have a method implemented in it 
+                            called __iter__()
+                            print(dir(nums))    __iter__ is listed in the result so it is an iterable
+
+                            * __iter__() returns an iterator which for loop uses to iterate through the list 
+                                but list does not have a __next__() method so it is not an iterator 
+                        
+                                print(next(nums))
+                                TypeEroor: 'list' object is not an iterator
+
+                * when we run next() on an object it executes the __next__() defined on that object 
+                * when we run iter() on an object it executes the __iter__() defined on that object
+                * iterator is also an iterable but iterable is not always an iterator object 
+                * a generator is also an iterator but an iterator does not have to be a generator
+                            
+            * iterator throws a StopIteration exception when the iterator is exhausted. 
+            * you can only go forward in an iterator, there is not resetting it, going back to previous entry 
+                or copying an iterator
+
+
+            * mimic the range() iterator 
+                class MyRange:
+                    def __init__(self, start, end):
+                        self.value = start
+                        self.end = end
+
+                    def __iter__(self):
+                        return self
+
+                    def __next__(self):
+                        if(self.value >= self.end):
+                            raise StopIteration
+                        current = self.value
+                        self.value += 1
+                        return current
+
+            * mimic the range() iterator with a generator 
+                def my_range(start, end):
+                    while start &lt; end:
+                        yield start 
+                        start += 1
+                    # generator raises StopIteration exception automatically 
+
+
+                nums = MyRange(0, 10)
+                g_nums = my_range(0, 10)
+
+                for num in g_nums: 
+                    print(num)
+
+            * iterator can go on indefinitely it does not have to have a end value or stopping condition
+            * You may want to use a custom iterator, rather than a generator, when you need a class with 
+                somewhat complex state-maintaining behavior, or want to expose other methods besides __next__ 
+                (and __iter__ and __init__). 
+            * Generators provide an easy, built-in way to create instances of Iterators. Generator function 
+                is still a function and when called, returns an instance of a generator object
+
+            * Think of a generator as a resumable function.
+                yield behaves like return in the sense that values that are yielded get "returned" by the generator. 
+                Unlike return, however, the next time the generator gets asked for a value, the generator's function, 
+                resumes where it left off -- after the last yield statement -- and continues to run until it hits 
+                another yield statement.
+                Behind the scenes, when you call the generator function the generator object is defined and returned 
+                for you to have a next attribute.
         </p>
 
         <h2>Modules and standard library</h2>
