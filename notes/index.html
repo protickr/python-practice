@@ -1937,11 +1937,13 @@
                 del emp_1.fullname
                 print(emp_1.fullname)
                 
-                * property decorator allows us to define a method and access it like a attribute
+                * property decorator allows us to define a method and access it like an attribute
                 * private attribute by _ (it is by convention)
                 * name mangling with __ (name is actually changed by python to _classattribute__variable_name)
+        </p>
 
-
+        <h2>Advanced Class</h2>
+        <p>
             * understanding class instantiation
                 class Foo: 
                     def __init__(self, x, y = 0):
@@ -1987,6 +1989,104 @@
 
                 8. we did not define __new__() in class 'Foo' either so, type.__new__() is called. 
 
+
+
+            * Old v/s new style class 
+
+                1. In Python 2, to make a class a new-style class, it had to inherit from object 
+                    (or from some superclass that did). Old-style classes do not inherit from object by default. 
+                    Old-style instances are always implemented with a built-in 'instance' type.
+
+                    Up to Python 2.1 the concept of class was unrelated to the concept of type, and old-style 
+                    classes were the only flavor available. For an old-style class, the statement 
+                    x.__class__ provides the class of x, but type(x) is always &lt;type 'instance'>. 
+                    This reflects the fact that all old-style instances, independent of their class, are implemented 
+                    with a single built-in type, called instance.
+
+                2. A new-style class is a user-defined type, and is very similar to built-in types. New-style classes
+                    in Python 3 implicitly inherit from object, so there is no need to specify MyClass(object).
+                    
+                    In Python 3, old-style classes were removed it only has new-style classes. No matter if you 
+                    subclass from object or not, classes are new-style in Python 3. The inheritance of "object" 
+                    is automatically assumed. 
+                    [For the backward compatibility reason, it is not bad to keep "(object)" there though.]
+
+                    A new-style class is simply a user-defined type, no more, no less. If x is an instance of 
+                    a new-style class, then type(x) is typically the same as x.__class__ (although this is not 
+                    guaranteed - a new-style class instance is permitted to override the value returned 
+                    for x.__class__).
+
+                3. The behaviour of new-style classes differs from that of old-style classes in a number of
+                    important details in addition to what type() returns. The reasoning was to remove the difference 
+                    between built-in types and user-defined classes;
+                    New-style classes were introduced in Python 2.2 to unify the concepts of class and type.
+                
+                
+            * Benefits of new style class
+
+                The major motivation for introducing new-style classes is to provide a unified object model with a 
+                full meta-model. It also has a number of practical benefits, like the ability to subclass most 
+                built-in types, or the introduction of “descriptors”, which enable computed properties.
+                
+                * Important behavior changes between old and new style classes
+                
+                    1. super added
+                        the super() method to invoke methods from parent class 
+                
+                    2. MRO changed
+                        Classic classes do a depth-first search from left to right. Stop on the first match. 
+                        They do not have the __mro__ attribute. Old style classes use DLR or depth-first left 
+                        to right algorithm whereas new style classes use C3 Linearization algorithm for method 
+                        resolution while doing multiple inheritances.
+                
+                    3. descriptors added
+                
+                    4. new style class objects cannot be raised unless derived from Exception
+                        
+                    5. __slots__ added
+                        Each python object has a __dict__ atttribute which is a dictionary containing all other 
+                        attributes. e.g. when you type self.attr python is actually doing self.__dict__['attr']. 
+                        As you can imagine using a dictionary to store attribute takes some extra space & time 
+                        for accessing it.
+                
+                        However, when you use __slots__, any object created for that class won't have a __dict__ 
+                        attribute. Instead, all attribute access is done directly via pointers.
+
+                        This way you can reduce the memory footprint of those classes 5-fold, 
+                        at the expense of having to write custom pickle code, if and when that becomes necessary.
+                        you can do python object serialization using the pickle module 
+                
+                        Also if you use __slots__ you can not dynamically add attributes to object after 
+                        instantiation only pre-specied attribtues in the __slot__ attribtues can be added 
+
+                        
+                        
+            * 'type' v/s 'object' primitive type
+                1. type in Python 3 is also an object - it inherits from object:
+                        >>> isinstance(type, object)
+                            True
+
+                2. It means that type is an object, and it has inherited the behaviour from the object class. 
+                    That is what enables one to write things like
+                        >>> type == type
+                            True
+                        >>> type.__eq__
+                            &lt;slot wrapper '__eq__' of 'object' objects>
+
+                3. The type.__eq__ was inherited from the object class.
+                    But the object class itself is also a type:
+                        >>> isinstance(object, type)
+                            True
+
+                4. It means that the class object as an object inherits the behaviour of type - type 
+                    is object's metaclass. And of course type's metaclass is type:
+                        >>> isinstance(type, type)
+                            True
+
+                5. And the class object is an object too:
+                        >>> isinstance(object, object)
+                            True 
+                
         </p>
 
         <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
