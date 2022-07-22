@@ -2060,7 +2060,7 @@
                         instantiation only pre-specied attribtues in the __slot__ attribtues can be added 
 
                         
-                        
+
             * 'type' v/s 'object' primitive type
                 1. type in Python 3 is also an object - it inherits from object:
                         >>> isinstance(type, object)
@@ -2086,7 +2086,87 @@
                 5. And the class object is an object too:
                         >>> isinstance(object, object)
                             True 
-                
+
+
+
+            * Super and Method Resolution Order (MRO)
+                * Method resolution order is resolved using C3 linearization algorithm.
+                    This is specifically important to understand in case of inheritance where inhertance forms a 
+                    diamond diagram. Inheritance is for code reuse. Using super() you can retarget from which 
+                    parent class you want to access a method or property.
+                    super() in python is different from super() of any other language. Generally in inheritance 
+                    whenever you call super() is about calling your parents. 
+                    
+                    * In python, super() does call parents but not a class's parent rather the class's children's 
+                        ancestor. 
+
+                    * super() just calls the next ancestor in line and the line is resolved by C3 linearization 
+                        algorithm. Children gets called before their parents and parents gets called in the order 
+                        listed.
+
+                        Method resolution order
+                            class Adam(object):
+                                def print_me(self):
+                                    print('class Adam')
+                                
+                            class Eve(object):
+                                def print_me(self):
+                                    print('class Eve')
+                            
+                            class Father(Adam, Eve):
+                                def print_me(self):
+                                    print('class Father')
+                            
+                            class Mother(Adam, Eve):
+                                def print_me(self):
+                                    print('class Mother')
+                            
+                            class Child(Father, Mother):
+                                pass
+                            
+                            #  |  Method resolution order:
+                            #  |      Child
+                            #  |      Father
+                            #  |      Mother
+                            #  |      Adam
+                            #  |      Eve
+                            #  |      builtins.object
+
+
+                    * you can use super to add dependecy injection
+                        subclass a parent class and in that subclass definition you add another parent class as 
+                        ancestor. Then the instance of that subclass will look for method or property in the 
+                        newly added ancestor class also. 
+
+                        Dependecy injection from R.H. presentation on super()
+                            class Robot(object):
+                                def left(self):
+                                    print("walking left")
+                                def right(self):
+                                    print("walking right")
+                        
+                            class MyRobot(Robot):
+                                def clean(self):
+                                super().left()
+                                super().right()
+                            
+                            # dependency 
+                            class MockRobot(Robot):
+                                def left(self):
+                                    print("mock left")
+                                def right(self):
+                                    print("mock right")
+                            
+                            # injection 
+                            class MyRobotTestable(MyRobot, MockRobot):
+                                pass
+
+                    * when you are using super for cooperative multiple inheritance use keyword arguments. 
+                        and somebody at the end of the chain should not have super() in them. 
+                    * you do not need to use super with arguments as it was done in python 2.x like,
+                        super(whose parent, where are we now)
+                    * use help(ClassName or object) to retrive the MRO
+
         </p>
 
         <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
