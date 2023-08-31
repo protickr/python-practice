@@ -11,7 +11,7 @@
 # list retains order 
 # lists are mutable
 
-# declaraing a list 
+# declaring a list 
 # 1
 # students = []
 
@@ -140,7 +140,7 @@ nums = [1, 2, 4, 3, 5]
 # 0
 
 # list.index()
-# retunrns the index of an element in a list or exception if not found
+# returns the index of an element in a list or exception if not found
 # print(courses.index("English"))
 # 1
 #

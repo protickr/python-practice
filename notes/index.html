@@ -38,13 +38,13 @@
                 input method always returns string 
 
             * print() 
-                1. print() can take multiple arguments seperated by comma 
-                2. print() takes a keyword argument 'sep' to add seperation between strings 
+                1. print() can take multiple arguments separated by comma 
+                2. print() takes a keyword argument 'sep' to add separation between strings 
                 3. print("%2f", 10.5)
 
                 
             Variables
-            variable is an identifer to a location in the memory, it is a container that hold a value 
+            variable is an identifier to a location in the memory, it is a container that hold a value 
             e.g., here 'message' is a variable which stores the value 'hello world' 
                 message = 'hello world'
                 print(message)
@@ -52,7 +52,7 @@
             * Variable naming convention 
                 1. should be lowercase, in case of multiple words in a variable, all words should be 
                     linked by underscores e.g., multiple_word_variable = 10
-                2. should not start with a number or special symbool or hyphen
+                2. should not start with a number or special symbol or hyphen
                 3. ALL_CAPS for constants 
                 4. PascalCase for class names 
 
@@ -67,7 +67,7 @@
                 7. complex number
                 8. null value, None
 
-                python is dynamically typed meaning, the type of value determines the type of a varaible
+                python is dynamically typed meaning, the type of value determines the type of a variable
 
 
                 * integer &lt;class 'int'&gt;
@@ -84,7 +84,7 @@
                          z.real == 2.0
                          z.imag == 3.0
                         
-                * type casting / converison 
+                * type casting / conversion 
                     num_1 = '10'
                     num_2 = '10.5'
                     
@@ -102,7 +102,7 @@
 
             multi line string: 
                 multi line string can be created by using 3 double or single quotes, 
-                retians white space and formatting as created
+                retains white space and formatting as created
                 
                     message = '''hello 
                     world!'''
@@ -127,7 +127,7 @@
                 * upper case 
                     message.upper()         # HELLO WORLD!
 
-                * count number of occurance of a substring in a string 
+                * count number of occurrence of a substring in a string 
                     message.count("world")   # 1
                     message.count("o")       # 2
                     message.count("t")       # 0
@@ -149,7 +149,7 @@
                 * string.islower() # True or False
                 * string.isupper() # True or False
 
-                * string concatanation 
+                * string concatenation 
                     greetings = "Hey"
                     name = "John"
 
@@ -187,6 +187,7 @@
                     * with dictionary
                         person = { 'name': 'Protick', 'age': 28 }
                         txt = 'I am {0[name]} my age is {1[age]}'.format(person, person)
+
                         or, 
                         txt = 'I am {0[name]} my age is {0[age]}'.format(person)
                         print(txt)      # I am Protick my age is 28
@@ -224,9 +225,9 @@
                             txt = '{0:.4f}'.format(3.141592)
                             print(txt)      # 3.1416
 
-                            * also perfomrs approximation
+                            * also performs approximation
 
-                        3. add comma seperator and digits after decimal point to a number 
+                        3. add comma separator and digits after decimal point to a number 
                             txt = '{0:,.2f}'.format(10000000)
                             print(txt)      # 10,000,000.00
                             
@@ -279,15 +280,13 @@
                         a = datetime(2022, 1, 11)
                         date_str = f'the day was, {a:%B %d, %Y}'
                         print(date_str)     # the day was, January 11, 2022
-
-                
         </p>
 
         <h2>Built in functions</h2>
         <p> 
             functions that can be used directly without importing anything or using any namespace
             * dir()
-                dir(varaible)
+                dir(variable)
                 returns all methods and attributes that we have access to when using a variable
     
             * help()
@@ -296,15 +295,15 @@
                 
             
             * absolute value - abs() 
-                abs(-15))               # 15
+                abs(-15)               # 15
 
             * round to nearest int or float 
                 * nearest int 
-                    round(10.6))        # 11
+                    round(10.6)        # 11
                  
                 * round to nearest float 
                     round to 1 decimal place
-                    round(10.65, 1))    # 10.7
+                    round(10.65, 1)    # 10.7
 
             * built in function to retrieve object's memory location - id() 
                 num = 10
@@ -331,7 +330,7 @@
 
         <h2>Operators</h2>
         <p>
-            * arithmatic operators
+            * arithmetic operators
                 num_1 = 10
                 num_2 = 3
 
@@ -345,7 +344,7 @@
                 * multiplication 
                     num_1 * num_2           # 30
 
-                * divisoin 
+                * division 
                     num_1 / num_2   
                     # in python 3,      10 / 3 == 3.3333333333333335
                     # in python 2,      10 / 3 == 3
@@ -359,11 +358,11 @@
                 * addition 
                     num_1 + num_2           # 10 + 3 == 13
 
-                * substraction 
+                * subtraction 
                     num_1 - num_2           # 10 - 3 == 7
 
-                * arithmatic operator precendence order 
-                    Parenthesis Exponentiation Multiplication Division Addition Substraction
+                * arithmetic operator precedence order 
+                    Parenthesis Exponentiation Multiplication Division Addition Subtraction
                     PEMDAS
 
 
@@ -399,7 +398,7 @@
                 * (assignment ) operator 
                     num = 10
 
-                * compound assignemnt operators 
+                * compound assignment operators 
                     num += 1
                     num = num + 1 == 11
 
@@ -408,7 +407,7 @@
                     num = 10 ** 2
                     num = 100
 
-                    * similerly,  
+                    * similarly,  
                         -=, *=, /=, //=, %=, **= 
 
             
@@ -482,7 +481,7 @@
                 2. None
                 3. Zero of any numeric type i.e., int, float, 
                 4. empty sequence such as empty tuples(), lists [], strings ""
-                5. epmty mappings such as dictionaries {}, sets {}
+                5. empty mappings such as dictionaries {}, sets {}
                 
             * True values 
                 except for False values everything else is True
@@ -492,7 +491,7 @@
                 if condition_1: 
                     'condition 1 is true'
                 elif condition_2:
-                    'conditon_1 is false and condition_2 is true' 
+                    'condition_1 is false and condition_2 is true' 
                 else: 
                     'condition_1 and condition_2 are false'
 
@@ -516,7 +515,7 @@
                             case _:
                                 return "Something's wrong with the internet"
 
-                * _ acts as a wildcard and never fails to match deafult case.
+                * _ acts as a wildcard and never fails to match default case.
                     If no case matches, none of the branches is executed.
 
                 * You can combine several literals in a single pattern using | (“or”):
@@ -614,7 +613,7 @@
                         values from a dictionary. Unlike sequence patterns, extra keys are ignored. An unpacking 
                         like **rest is also supported. (But **_ would be redundant, so it is not allowed.)
                     
-                        * Subpatterns may be captured using the as keyword:
+                        * Sub-patterns may be captured using the as keyword:
                     
                             case (Point(x1, y1), Point(x2, y2) as p2): ...
                             will capture the second element of the input as p2 (as long as the input is a 
@@ -667,7 +666,7 @@
                     # this block executes always 
 
                 * else and finally block are optional 
-                * you can use more that one catch block and differnt Exception / Error class in different blocks.
+                * you can use more that one catch block and different Exception / Error class in different blocks.
 
 
             * Duck Typing 
@@ -682,7 +681,7 @@
                 than anticipated. 
 
             * LBYL
-                To vear away from exceptions we often resort to a certain coding style where we use guard clauses
+                To veer away from exceptions we often resort to a certain coding style where we use guard clauses
                 to prevent that exception from happening. This approach in generally followed in many other 
                 programming languages and we call it 'Look Before You Leap' or LBYL in short.
                     e.g., 
@@ -701,8 +700,8 @@
                             print(e)
 
                 why EAFP is pythonic and LBYL is not ?
-                    1. EAFP helps reduce the execution time as python is a bit slow compared to other compilied 
-                        languages. Checking with multiple gurad clauses is more heavy on the processor unit than 
+                    1. EAFP helps reduce the execution time as python is a bit slow compared to other compiled 
+                        languages. Checking with multiple guard clauses is more heavy on the processor unit than 
                         catching exception with one or more catch blocks. 
 
                     2. Race condition 
@@ -724,7 +723,7 @@
                 4. list retains order 
                 5. lists are mutable
 
-            declaraing a list 
+            declaring a list 
                 1. students = []
                 2. students = list()
                 type(students)  # &lt;class 'list'&gt;
@@ -774,7 +773,7 @@
                         
                     
                 * list.extend([new, list])
-                    unpacks the extend's argument into seperate elements and append them to the list 
+                    unpacks the extend's argument into separate elements and append them to the list 
                         new_courses = ['History', 'Physics']
                         courses.extend(new_courses)
                         print(courses)      # ['Bangla', 'English', 'Math', 'History', 'Physics']
@@ -818,7 +817,7 @@
                     courses.count("Biology")    # 0
                     
                 * list.index()
-                    retunrns the index of an element in a list or exception if not found
+                    returns the index of an element in a list or exception if not found
                         courses.index("English") # 1
                         courses.index("Biology") # ValueError: 'Biology' is not in list
                     
@@ -848,10 +847,10 @@
             Though tuples may seem similar to lists, they are often used in different situations 
             and for different purposes. Tuples are immutable, and usually contain a heterogeneous 
             sequence of elements that are accessed via unpacking or indexing or even by attribute in 
-            the case of namedtuples. 
+            the case of named-tuples. 
             Lists are mutable, and their elements are usually homogeneous and are accessed by iterating over the list.
         
-            declaraing a tuple 
+            declaring a tuple 
                 1. months = ()
                 2. months = tuple()
                 type(months)                    # &lt;class 'tuple'&gt;
@@ -941,13 +940,13 @@
             sets are optimized to use membership operator( in )
 
 
-            declaraing a set 
+            declaring a set 
                 1.  species = { 'Homo habilis', 'Homo rudolfensis', 'Homo erectus', 'Homo antecessor' }
                     species = {} will create an empty dictionary not a set.                     
                 2.  species = set()
                 type(species)   # &lt;class 'set'&gt;
 
-                * as sets are unordered/unindexed we can not access it by index 
+                * as sets are unordered/un-indexed we can not access it by index 
 
             * set methods
                 new_set = { 1, 2, 3, 4, 5, 3, 4, 6 }
@@ -987,7 +986,7 @@
                     set_from_list = set([1, 2, 3, 4, 5, 1, 2])
                     print(set_from_list)    # {1, 2, 3, 4, 5}
 
-                * craete list from a set
+                * create list from a set
                     list_from_set = list(set_from_list)
                     print(list_from_set)
                     [1, 2, 3, 4, 5]
@@ -1027,7 +1026,7 @@
             It is best to think of a dictionary as a set of key: value pairs, 
             with the requirement that the keys are unique (within one dictionary).
 
-            * declaraing a dictionary 
+            * declaring a dictionary 
                 1. student = {}
                 2. student = dict()
                 3. The dict() constructor builds dictionaries directly from sequences of key-value pairs
@@ -1097,7 +1096,7 @@
                         print(last)     # ('country', 'Bangladesh')
 
                 * dict.clear()
-                    cleares dictionary
+                    clears dictionary
                         d = john.clear()
                         print(d, john)  # None {}
 
@@ -1242,7 +1241,7 @@
                 
                 li = [-6, -5, -4, 1, 2, 3]
                 
-                to sort li list based on absoulte value of the elements we can pass builtin abs function as 
+                to sort li list based on absolute value of the elements we can pass builtin abs function as 
                 key value 
                     nli = sorted(li, key=abs)
 
@@ -1275,7 +1274,7 @@
         <p>
             <strong>for</strong> 
                 nums = [1 , 2, 3, 4, 5]
-                * with sequence or collection datas
+                * with sequence or collection data
                     for num in nums: 
                         print(num)  # 1 2 3 4 5 [each element on a new line]
 
@@ -1411,7 +1410,7 @@
                         [1, 2]
                         [1, 2, 3]
 
-                    because the default argument L ponts to a list object which is created at the time of function 
+                    because the default argument L points to a list object which is created at the time of function 
                     definition.
 
                     Note 3: 
@@ -1429,7 +1428,7 @@
                             L.append(a)
                             return L
 
-            * Positonal and Keyword arguments and optional parameter
+            * Positional and Keyword arguments and optional parameter
                 def func(pos_arg, kwarg_1='No value', kwarg_2=True):
                     print(pos_arg, kwarg_1, kwarg_2)
             
@@ -1439,7 +1438,7 @@
                     this will print, 
                         Required Positional Argument keyword argument for optional parameter kwarg_1 True
                 
-                In this exmaple,
+                In this example,
                 1. 'pos_arg' is a required positional parameter ( / formal argument) 
                 2. 'kwarg_1' and 'kwarg_2' are optional parameters (/ formal arguments )
                 3. when we are calling the function, 
@@ -1459,8 +1458,8 @@
                     3. All the keyword arguments passed must match one of the arguments accepted by the function, 
                         and their order is not important. This also includes non-optional arguments.
 
-                            func(kwarg_1 = 'keword arg', pos_arg = 'pos arg')
-                            output:  pos arg keword arg True
+                            func(kwarg_1 = 'keyword arg', pos_arg = 'pos arg')
+                            output:  pos arg keyword arg True
 
                     4. No argument may receive a value more than once.
                         for the previous example, 
@@ -1529,7 +1528,7 @@
                 1. unpacking a tuple and use elements as positional arguments
                     *(1, 10) is equivalent to 1, 10
 
-                2. unpacking a dictiona ans use key:value pair as keyword arguments 
+                2. unpacking a dictionary and use key:value pair as keyword arguments 
                     **{'name': 'John', 'age': 25} is equivalent to  name='john', age=25
 
 
@@ -1594,7 +1593,7 @@
                 
                 Variable scope 
                     where our variable can be accessed from within the program and what values those variables 
-                    hold in differnt contexts 
+                    hold in different contexts 
                 
                     1. Local Scope 
                         variable defined within a function body is called local variable and it is not 
@@ -1641,8 +1640,6 @@
                     goes to Builtins scope. If it finds a variable in a scope it stops looking up further in
                     the scope chain. If it does not find the variable in the whole scope chain it throws 
                     a NameError exception.
-                
-
         </p>
 
         <h2>Class and OOP</h2>
@@ -1694,8 +1691,8 @@
                 2. we can also create and assign value to new class attributes using the object reference 
                     emp_1.email = emp_1.first + emp_1.last + "@gmail.com"
 
-                3. instance variables contain data that is unque to each instance, 
-                    instance varibales are also called attributes 
+                3. instance variables contain data that is unique to each instance, 
+                    instance variables are also called attributes 
 
                 4. Any instance method called using an object reference passes the object reference 
                     as the first argument to that method                 
@@ -1726,7 +1723,7 @@
                     we want the 'num_of_emps' to become specific to any instance
 
                 6. when we reassign a class variable with an instance reference then it overrides the class 
-                    variable and creates a new instnace variable with the same name as the class varaible 
+                    variable and creates a new instance variable with the same name as the class variable 
                     think of it as how global variable can be accessed in a local scope but re-assignment would 
                     lead to creating a new variable in that local scope with the same name as the global variable
                     
@@ -1748,14 +1745,14 @@
                     adding a decorator '@classmethod' to the top of a method definition inside a class 
 
                 3. static method takes neither object nor class reference as first argument by default 
-                    they are just regular functions which have some logical conneciton to the class itself 
+                    they are just regular functions which have some logical connection to the class itself 
                     static method can be declared with '@staticmethod' decorator
                     * static method does not depend on any class variable or instance variable 
                     * so if you need a method inside a class which does not need instance or class reference 
                         then declare that method as static method
 
 
-                * in this exapmle we have two class methods called 'from_str(cls, emp_str)' which works as an 
+                * in this example we have two class methods called 'from_str(cls, emp_str)' which works as an 
                     alternative constructor it takes a string and creates a new Employee object and returns it. 
                     Also the class reference is passed to it automatically as the first argument and 
                     'set_raise_amount(cls, amount)' takes an amount as an argument set the class variable raise_amount
@@ -1883,7 +1880,7 @@
                 print(emp_1 + emp_2)
                 print(len(emp_1))
                 
-                * this methods emulates builtins behaviours in python 
+                * this methods emulates builtins behaviors in python 
                 
                 * __repr__() is called when we do repr(obj)
                     output of this method is meant to be used by developers to logging debugging 
@@ -1945,49 +1942,73 @@
         <h2>Advanced Class</h2>
         <p>
             * understanding class instantiation
-                class Foo: 
-                    def __init__(self, x, y = 0):
-                        self.x = x
-                        self.y = y
+            '''
+                For new-style classes, implicit invocations of special methods are only guaranteed to work correctly if defined 
+                on an object's type(/ Class), not in the object's instance dictionary. 
+                That behavior is the reason why the following code raises an exception 
+                (unlike the equivalent example with old-style classes):
+                https://docs.python.org/dev/reference/datamodel.html#special-lookup
+            '''
+            * special methods are looked up and executed from a object's Class not from the object
+            
+            class Foo: 
+                def __init__(self):
+                    pass
+            
+            bar = Foo()
+            
+            1. Foo is a class and classes in Python are objects too! Classes, functions, methods and instances
+                are all objects and whenever you put parentheses after their name you invoke their __call__() method
+            
+            2. as __call__() method is an instance method its first parameter is the object itself, __call__(self)
+            
+            3. special methods are looked up and executed from a object's Class not from the object itself
+                Foo() invokes __call__(), as Foo is also an object of class "type", type.__call__() is called
+            
+            4. so finally, 
+                Foo() => Foo.__call__(Foo, *args, **kwargs) => type.__call__(Foo, *args, **kwargs) 
+            
+            '''
+                # type.__call__(): 
                 
-                Foo(1, y=2)
-                print(type(Foo))
-
-                1. __init__ doesn't return an object, but calling Foo(1, y=2) does return an object. 
+                def __call__(obj_type, *args, **kwargs):
+                    obj = obj_type.__new__(*args, **kwargs)
+                    if obj is not None and issubclass(obj, obj_type):
+                        obj.__init__(*args, **kwargs)
+                    return obj
                 
-                2. __init__ expects a self parameter, but there is no such parameter when calling Foo(1, y=2).
+                # more like obj_type.__new__(obj_type, *args, **kwargs) ?
+            '''
+            5. for our example the call should look like, 
+                def __call__(Foo, *args, **kwargs):
                 
-                3. Foo is a class, but classes in Python are objects too! Classes, functions, methods and instances 
-                    are all objects and whenever you put parentheses after their name, 
-                    you invoke their __call__ method. 
-
-                4. So Foo(1, y=2) is equivalent to Foo.__call__(1, y=2). That __call__ is the one defined by 
-                    Foo's class. What is Foo's class ? 
-                        &lt;class 'type'&gt;
-                    Foo is an instance of 'type Class' and calling Foo() (or Foo.__call__()) 
-                    returns an object of class Foo 
-
-                5. So when we call Foo() we invoke type.__call__() 
-                    what does it look like ? 
-                    let's look at it as a stripped down version, 
-                    [this is not an exact version that is implemented by PyPi but it is equivalent]
-
-                        def __call__(obj_type, *args, **kwargs):
-                            obj = obj_type.__new__(*args, **kwargs)
-                            if obj is not None and issubclass(obj, obj_type):
-                                obj.__init__(*args, **kwargs)
-                            return obj
-
-                6. __new__ allocates memory for the object, constructs it as an “empty” object and then __init__ 
-                    is called to initialize it.
-
-                    * It should be noted that while __new__ is a static method, you don't need to declare it with 
-                        @staticmethod - it is special-cased by the Python interpreter.
-
-                7. here 'obj_type' refers to the class 'Foo' (class is also an object remember ?) and when you call 
-                    a method the object reference is automatically passed as first argument. 
-
-                8. we did not define __new__() in class 'Foo' either so, type.__new__() is called. 
+                invokes, __new__() i.e., 
+                Foo.__new__(Foo, *args, **kwargs) => type.__new__(Foo, *args, **kwargs)
+                        
+            6. __new__():
+                a) Called to create a new instance of class, cls.__new__() is a static method 
+                    (special-cased so you need not declare it as such)
+                
+                b) takes the class of which an instance was requested as its first argument. 
+                
+                c) The return value of __new__() should be the new object instance (usually an instance of cls).
+                
+            7.  If __new__() is invoked during object construction and it returns an instance of cls, then 
+                    the new instance's __init__() method will be invoked like __init__(self[, ...]), where self is the new instance 
+                    and the remaining arguments are the same as were passed to the object constructor.
+            
+                If __new__() does not return an instance of cls, then the new instance's __init__() method will not be invoked.
+            
+            8. If Foo class does implement a __new__() method in it then that will be called as like in type's __call__ method 
+                Foo.__new__() is not an implicit invocation, is it ?
+                but Foo() invocation of Foo.__call__() is 
+            
+            summary:
+            1. Foo(*args, **kwargs) is equivalent to Foo.__call__(*args, **kwargs).
+            2. Since Foo is an instance of type, Foo.__call__(*args, **kwargs) calls type.__call__(Foo, *args, **kwargs).
+            3. type.__call__(Foo, *args, **kwargs) calls type.__new__(Foo, *args, **kwargs) which returns obj.
+            4. obj is then initialized by calling obj.__init__(*args, **kwargs).
+            5. obj is returned.
 
 
 
@@ -2016,11 +2037,11 @@
                     guaranteed - a new-style class instance is permitted to override the value returned 
                     for x.__class__).
 
-                3. The behaviour of new-style classes differs from that of old-style classes in a number of
+                3. The behavior of new-style classes differs from that of old-style classes in a number of
                     important details in addition to what type() returns. The reasoning was to remove the difference 
                     between built-in types and user-defined classes;
                     New-style classes were introduced in Python 2.2 to unify the concepts of class and type.
-                
+
                 
             * Benefits of new style class
 
@@ -2044,7 +2065,7 @@
                     4. new style class objects cannot be raised unless derived from Exception
                         
                     5. __slots__ added
-                        Each python object has a __dict__ atttribute which is a dictionary containing all other 
+                        Each python object has a __dict__ attribute which is a dictionary containing all other 
                         attributes. e.g. when you type self.attr python is actually doing self.__dict__['attr']. 
                         As you can imagine using a dictionary to store attribute takes some extra space & time 
                         for accessing it.
@@ -2057,7 +2078,7 @@
                         you can do python object serialization using the pickle module 
                 
                         Also if you use __slots__ you can not dynamically add attributes to object after 
-                        instantiation only pre-specied attribtues in the __slot__ attribtues can be added 
+                        instantiation only pre-specified attributes in the __slot__ attributes can be added 
 
                         
 
@@ -2066,7 +2087,7 @@
                         >>> isinstance(type, object)
                             True
 
-                2. It means that type is an object, and it has inherited the behaviour from the object class. 
+                2. It means that type is an object, and it has inherited the behavior from the object class. 
                     That is what enables one to write things like
                         >>> type == type
                             True
@@ -2091,14 +2112,14 @@
 
             * Super and Method Resolution Order (MRO)
                 * Method resolution order is resolved using C3 linearization algorithm.
-                    This is specifically important to understand in case of inheritance where inhertance forms a 
-                    diamond diagram. Inheritance is for code reuse. Using super() you can retarget from which 
+                    This is specifically important to understand in case of inheritance where inheritance forms a 
+                    diamond diagram. Inheritance is for code reuse. Using super() you can re-target from which 
                     parent class you want to access a method or property.
                     super() in python is different from super() of any other language. Generally in inheritance 
                     whenever you call super() is about calling your parents. 
                     
                     * In python, super() does call parents but not a class's parent rather the class's children's 
-                        ancestor. 
+                        ancestor.
 
                     * super() just calls the next ancestor in line and the line is resolved by C3 linearization 
                         algorithm. Children gets called before their parents and parents gets called in the order 
@@ -2133,12 +2154,12 @@
                             #  |      builtins.object
 
 
-                    * you can use super to add dependecy injection
+                    * you can use super to add dependency injection
                         subclass a parent class and in that subclass definition you add another parent class as 
                         ancestor. Then the instance of that subclass will look for method or property in the 
                         newly added ancestor class also. 
 
-                        Dependecy injection from R.H. presentation on super()
+                        Dependency injection from R.H. presentation on super()
                             class Robot(object):
                                 def left(self):
                                     print("walking left")
@@ -2165,7 +2186,12 @@
                         and somebody at the end of the chain should not have super() in them. 
                     * you do not need to use super with arguments as it was done in python 2.x like,
                         super(whose parent, where are we now)
-                    * use help(ClassName or object) to retrive the MRO
+                    * use help(ClassName or object) to retrieve the MRO
+
+
+            * Python attributes access and descriptor protocol 
+                
+            
 
         </p>
 
@@ -2183,7 +2209,7 @@
             
             * higher order function 
                 if a function takes another function as argument or return a function then it is called a 
-                higher order functionmap() is a higher order function becaues it takes a callback function 
+                higher order function, map() is a higher order function because it takes a callback function 
                 as an argument.
 
                 Example 1: first class function
@@ -2229,10 +2255,10 @@
 
 
             * Closure 
-                In simple terms, a closure is an inner function that remember and has access to variabless in 
+                In simple terms, a closure is an inner function that remember and has access to variables in 
                 the local scope in which it was created, even after the outer function has finished executing
 
-                * Exmaple 1: 
+                * Example 1: 
                             def outer_func():
                                 message = 'hi'
                                 def inner_func():
@@ -2458,7 +2484,7 @@
                         next(snums) == 4
                         next(snums) == 9
                         next(snums) == 16
-                        next(snums)) == StopIteration exception 
+                        next(snums) == StopIteration exception 
                         thrown as we reach the end of a generator; i.e., generator is exhausted
 
                     * 'yield' returns a generator object
@@ -2623,9 +2649,6 @@
                     5. from my_module import * 
                         imports everything from a module 
                         Not recommended as it convolutes the global namespace
-
-                
-
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>

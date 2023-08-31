@@ -38,7 +38,7 @@
 # so @decorator keyword replaces original function with wrapper function and takes original function as 
 # its first argument automatically 
 # so now, to pass argument to the wrapper function we need to define wrapper function with parameters that 
-# can recieve multiple positional and keyword arguments 
+# can receive multiple positional and keyword arguments 
 # we can do so by, 
 
 # def decorator_function(original_function):

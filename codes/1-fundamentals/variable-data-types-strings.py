@@ -27,7 +27,7 @@
 # print(message.upper())
 # HELLO WORLD!
 
-# count number of occurance of a substring in a string 
+# count number of occurrence of a substring in a string 
 # print(message.count("world"))
 # 1
 #
@@ -52,7 +52,7 @@
 
 
 
-# string concatanation 
+# string concatenation 
 # greetings = "Hey"
 # name = "John"
 

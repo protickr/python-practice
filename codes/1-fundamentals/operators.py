@@ -13,7 +13,7 @@
 # print(num)
 # print(type(num))
 
-# type casting / converison 
+# type casting / conversion 
 # num_1 = '10'
 # num_2 = '10.5'
 # string to int, float
@@ -45,7 +45,7 @@
 
 
 
-# arithmatic operator 
+# arithmetic operator 
 # num_1 = 10
 # num_2 = 3
 
@@ -61,7 +61,7 @@
 # print(num_1 * num_2)
 # 30
 
-# divisoin 
+# division 
 # print(num_1 / num_2)
 # in python 3, 10 / 3 == 3.3333333333333335
 # in python 2, 10 / 3 == 3
@@ -78,12 +78,12 @@
 # print(num_1 + num_2)
 # 10 + 3 == 13
 
-# substraction 
+# subtraction 
 # print(num_1 - num_2)
 # 10 - 3 == 7
 
-# arithmatic operator precendence order 
-# Parenthesis Exponentiation Multiplication Division Addition Substraction
+# arithmetic operator precedence order 
+# Parenthesis Exponentiation Multiplication Division Addition Subtraction
 # PEMDAS
 
 
@@ -123,7 +123,7 @@
 # = (assignment ) operator 
 # num = 10
 
-# compound assignemnt operators 
+# compound assignment operators 
 # num += 1
 # print(num)
 # num = num + 1 == 11
@@ -135,5 +135,5 @@
 # num = 10 ** 2
 # num = 100
 
-# similerly,  
+# similarly,  
 # -=, *=, /=, //=, %=, **= 

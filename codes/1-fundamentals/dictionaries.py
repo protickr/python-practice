@@ -8,7 +8,7 @@
 # It is best to think of a dictionary as a set of key: value pairs, 
 # with the requirement that the keys are unique (within one dictionary).
 
-# declaraing a dictionary 
+# declaring a dictionary 
 # 1
 # student = {}
 
@@ -96,7 +96,7 @@ john = { 'name': 'John', 'age': 28, 'country': 'Bangladesh' }
 # ('country', 'Bangladesh')
 
 # dict.clear()
-# cleares dictionary
+# clears dictionary
 # d = john.clear()
 # print(d, john)
 # None {}
