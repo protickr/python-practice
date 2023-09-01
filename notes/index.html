@@ -2183,12 +2183,53 @@
                                 pass
 
                     * when you are using super for cooperative multiple inheritance use keyword arguments. 
-                        and somebody at the end of the chain should not have super() in them. 
+                        and somebody at the end of the chain should not have super() in them.
                     * you do not need to use super with arguments as it was done in python 2.x like,
                         super(whose parent, where are we now)
                     * use help(ClassName or object) to retrieve the MRO
 
+                                        
+                    inheritance is a tool for code reuse 
+                    1. in any class inside any method when you see super(), this super() will not return the proxy object of parent of that class 
+                    rather it will return "the next parent's proxy object" according to the MRO of the subclass from where the look up originated
 
+                    2. there is no function overloading in python and there is no function overriding if multiple functions override each 
+                        other in the same scope. But you can definitely call parent class's method that you have overridden in the child class 
+                        by using,
+                            super(ChildClass, self).over_ridden_method()
+
+                    * super() can also take two parameters: the first is the subclass, and the second parameter 
+                        is an object that is an instance of that subclass.
+
+                    * in python 2, we used to call super() like - Raymond Hettinger
+                        super(Whose MRO, Where are we on that MRO)
+
+                    * super() was introduced for multiple co-operative inheritance
+                    * super() allows us to re-target the chosen parent class from which we will reuse some code
+
+                    Note: Technically, super() doesn't return a method. It returns a proxy object. This is an object 
+                    that delegates calls to the correct class methods without making an additional object in order to do so.
+                    [a bit confused]
+
+
+                    * cooperative multiple inheritance:
+                        design a tree of classes where every class in the tree calls for the next in line 
+                        1. meaning every class calls super() 
+                        2. except for the last class in the tree create a stopper class 
+                        3. create a cooperative wrapper class around a class that is not cooperative
+                        4. use keyword arguments
+
+                    * c3 linearization algorithm main points: 
+                        1. children get called before their parents 
+                        2. parents gets called in the order listed in the parent list specified in 
+                            class Foo(parent1, parent2, parent3)
+                            order of lookup according to C3: Foo > parent1 > parent2 > parent3
+
+
+                    * you can also use composition, or mix-in class
+
+
+                    
             * Python attributes access and descriptor protocol 
                 
             
