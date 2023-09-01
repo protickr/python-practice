@@ -485,7 +485,7 @@
                 
             * True values 
                 except for False values everything else is True
-                
+
                 
             * if elif else
                 if condition_1: 
@@ -545,51 +545,6 @@
                     3. captures two values, which makes it conceptually similar to the 
                         unpacking assignment (x, y) = point.
 
-
-                * If you are using classes to structure your data you can use the class name followed by an argument 
-                    list resembling a constructor, but with the ability to capture attributes into variables:
-
-                    class Point:
-                        x: int
-                        y: int
-
-                    def where_is(point):
-                        match point:
-                            case Point(x=0, y=0):
-                                print("Origin")
-                            case Point(x=0, y=y):
-                                print(f"Y={y}")
-                            case Point(x=x, y=0):
-                                print(f"X={x}")
-                            case Point():
-                                print("Somewhere else")
-                            case _:
-                                print("Not a point")
-
-                * Look at them as an extended form of what you would put on the left of an assignment, 
-                    to understand which variables would be set to what. 
-                    
-                    Only the standalone names (like var above) are assigned to by a match statement. 
-                    Dotted names (like foo.bar), attribute names (the x= and y= above) or class names (recognized 
-                    by the “(…)” next to them like Point above) are never assigned to.
-
-
-                * Patterns can be arbitrarily nested. For example, if we have a short list of points, 
-                    we could match it like this:
-
-                    match points:
-                        case []:
-                            print("No points")
-                        case [Point(0, 0)]:
-                            print("The origin")
-                        case [Point(x, y)]:
-                            print(f"Single point {x}, {y}")
-                        case [Point(0, y1), Point(0, y2)]:
-                            print(f"Two on the Y axis at {y1}, {y2}")
-                        case _:
-                            print("Something else")
-                    
-
                 * We can add an if clause to a pattern, known as a “guard”. If the guard is false, match goes 
                     on to try the next case block. Note that value capture happens before the guard is evaluated:
 
@@ -601,9 +556,7 @@
 
 
                 * Several other key features of this statement:
-                    Like unpacking assignments, tuple and list patterns have exactly the same meaning and 
-                    actually match arbitrary sequences. An important exception is that they don't match iterators 
-                    or strings.
+                    An important exception is that they don't match iterators or strings.
                     
                     * Sequence patterns support extended unpacking: [x, y, *rest] and (x, y, *rest) 
                         work similar to unpacking assignments. The name after * may also be _, so (x, y, *_) 
@@ -613,12 +566,6 @@
                         values from a dictionary. Unlike sequence patterns, extra keys are ignored. An unpacking 
                         like **rest is also supported. (But **_ would be redundant, so it is not allowed.)
                     
-                        * Sub-patterns may be captured using the as keyword:
-                    
-                            case (Point(x1, y1), Point(x2, y2) as p2): ...
-                            will capture the second element of the input as p2 (as long as the input is a 
-                            sequence of two points)
-                            
                     * Most literals are compared by equality, however the singletons True, False 
                         and None are compared by identity.
                     
@@ -641,7 +588,6 @@
                                 case Color.BLUE:
                                     print("I'm feeling the blues :(")
 
-                
         </p>
 
         <h2>Error Handling, Duck Typing, LBYL, EAFP</h2>
