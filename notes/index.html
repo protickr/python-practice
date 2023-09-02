@@ -1888,73 +1888,73 @@
         <h2>Advanced Class</h2>
         <p>
             * understanding class instantiation
-            '''
-                For new-style classes, implicit invocations of special methods are only guaranteed to work correctly if defined 
-                on an object's type(/ Class), not in the object's instance dictionary. 
-                That behavior is the reason why the following code raises an exception 
-                (unlike the equivalent example with old-style classes):
-                https://docs.python.org/dev/reference/datamodel.html#special-lookup
-            '''
-            * special methods are looked up and executed from a object's Class not from the object
-            
-            class Foo: 
-                def __init__(self):
-                    pass
-            
-            bar = Foo()
-            
-            1. Foo is a class and classes in Python are objects too! Classes, functions, methods and instances
-                are all objects and whenever you put parentheses after their name you invoke their __call__() method
-            
-            2. as __call__() method is an instance method its first parameter is the object itself, __call__(self)
-            
-            3. special methods are looked up and executed from a object's Class not from the object itself
-                Foo() invokes __call__(), as Foo is also an object of class "type", type.__call__() is called
-            
-            4. so finally, 
-                Foo() => Foo.__call__(Foo, *args, **kwargs) => type.__call__(Foo, *args, **kwargs) 
-            
-            '''
-                # type.__call__(): 
+                '''
+                    For new-style classes, implicit invocations of special methods are only guaranteed to work correctly if defined 
+                    on an object's type(/ Class), not in the object's instance dictionary. 
+                    That behavior is the reason why the following code raises an exception 
+                    (unlike the equivalent example with old-style classes):
+                    https://docs.python.org/dev/reference/datamodel.html#special-lookup
+                '''
+                * special methods are looked up and executed from a object's Class not from the object
                 
-                def __call__(obj_type, *args, **kwargs):
-                    obj = obj_type.__new__(*args, **kwargs)
-                    if obj is not None and issubclass(obj, obj_type):
-                        obj.__init__(*args, **kwargs)
-                    return obj
+                class Foo: 
+                    def __init__(self):
+                        pass
                 
-                # more like obj_type.__new__(obj_type, *args, **kwargs) ?
-            '''
-            5. for our example the call should look like, 
-                def __call__(Foo, *args, **kwargs):
+                bar = Foo()
                 
-                invokes, __new__() i.e., 
-                Foo.__new__(Foo, *args, **kwargs) => type.__new__(Foo, *args, **kwargs)
-                        
-            6. __new__():
-                a) Called to create a new instance of class, cls.__new__() is a static method 
-                    (special-cased so you need not declare it as such)
+                1. Foo is a class and classes in Python are objects too! Classes, functions, methods and instances
+                    are all objects and whenever you put parentheses after their name you invoke their __call__() method
                 
-                b) takes the class of which an instance was requested as its first argument. 
+                2. as __call__() method is an instance method its first parameter is the object itself, __call__(self)
                 
-                c) The return value of __new__() should be the new object instance (usually an instance of cls).
+                3. special methods are looked up and executed from a object's Class not from the object itself
+                    Foo() invokes __call__(), as Foo is also an object of class "type", type.__call__() is called
                 
-            7.  If __new__() is invoked during object construction and it returns an instance of cls, then 
-                    the new instance's __init__() method will be invoked like __init__(self[, ...]), where self is the new instance 
-                    and the remaining arguments are the same as were passed to the object constructor.
-            
-                If __new__() does not return an instance of cls, then the new instance's __init__() method will not be invoked.
-            
-            8. If Foo class does implement a __new__() method in it then that will be called as like in type's __call__ method 
-                Foo.__new__() is not an implicit invocation, is it ?
-                but Foo() invocation of Foo.__call__() is 
-            
-            summary:
-            1. Foo(*args, **kwargs) is equivalent to Foo.__call__(*args, **kwargs).
-            2. Since Foo is an instance of type, Foo.__call__(*args, **kwargs) calls type.__call__(Foo, *args, **kwargs).
-            3. type.__call__(Foo, *args, **kwargs) calls type.__new__(Foo, *args, **kwargs) which returns obj.
-            4. obj is then initialized by calling obj.__init__(*args, **kwargs).
-            5. obj is returned.
+                4. so finally, 
+                    Foo() => Foo.__call__(Foo, *args, **kwargs) => type.__call__(Foo, *args, **kwargs) 
+                
+                '''
+                    # type.__call__(): 
+                    
+                    def __call__(obj_type, *args, **kwargs):
+                        obj = obj_type.__new__(*args, **kwargs)
+                        if obj is not None and issubclass(obj, obj_type):
+                            obj.__init__(*args, **kwargs)
+                        return obj
+                    
+                    # more like obj_type.__new__(obj_type, *args, **kwargs) ?
+                '''
+                5. for our example the call should look like, 
+                    def __call__(Foo, *args, **kwargs):
+                    
+                    invokes, __new__() i.e., 
+                    Foo.__new__(Foo, *args, **kwargs) => type.__new__(Foo, *args, **kwargs)
+                            
+                6. __new__():
+                    a) Called to create a new instance of class, cls.__new__() is a static method 
+                        (special-cased so you need not declare it as such)
+                    
+                    b) takes the class of which an instance was requested as its first argument. 
+                    
+                    c) The return value of __new__() should be the new object instance (usually an instance of cls).
+                    
+                7.  If __new__() is invoked during object construction and it returns an instance of cls, then 
+                        the new instance's __init__() method will be invoked like __init__(self[, ...]), where self is the new instance 
+                        and the remaining arguments are the same as were passed to the object constructor.
+                
+                    If __new__() does not return an instance of cls, then the new instance's __init__() method will not be invoked.
+                
+                8. If Foo class does implement a __new__() method in it then that will be called as like in type's __call__ method 
+                    Foo.__new__() is not an implicit invocation, is it ?
+                    but Foo() invocation of Foo.__call__() is 
+                
+                summary:
+                1. Foo(*args, **kwargs) is equivalent to Foo.__call__(*args, **kwargs).
+                2. Since Foo is an instance of type, Foo.__call__(*args, **kwargs) calls type.__call__(Foo, *args, **kwargs).
+                3. type.__call__(Foo, *args, **kwargs) calls type.__new__(Foo, *args, **kwargs) which returns obj.
+                4. obj is then initialized by calling obj.__init__(*args, **kwargs).
+                5. obj is returned.
 
 
 
@@ -2176,12 +2176,98 @@
 
 
                     
-            * Python attributes access and descriptor protocol 
-                
-            
+            * Python attributes access and descriptor protocol                 
+                # Descriptor: 
 
+                1. any Class that implements __get__(), __set__() or __delete__() method 
+                    and descriptors can also have __set_name__() method defined in them 
+            
+                2. __set_name__() method of descriptor class is automatically called by the owner class which instantiates the descriptor.
+                        When the owner class is being created, type.__new__() scans the class variables and makes callbacks to those 
+                        with a __set_name__() hook.
+                        This method, if present, is called even if the class is not a descriptor.
+            
+                        '''
+                            class C: 
+                                def __set_name__(self, ownerClass, classAttributeName)
+                            
+                            class A:
+                                x = C()     # Automatically calls: x.__set_name__(A, 'x')
+                        '''
+            
+                3. Descriptors only work when used as class variables. When put in instances, they have no effect.
+                
+                4. Descriptors get invoked by the dot operator during attribute lookup. If a descriptor is accessed indirectly 
+                        with vars(some_class)[descriptor_name], the descriptor instance is returned without invoking it.
+                
+                5. Example: 
+                    the class "Ten" is a descriptor because it implements the __get__() method of the descriptor protocol
+                
+                    # descriptor: Ten
+                        class Ten: 
+                            def __get__(self, obj, objtype=None):
+                                print(self, obj, objtype)
+                                return 10
+                    
+                    # Owner: here A is the owner class, which uses the descriptor "Ten" by using, y = Ten()
+                        class A:
+                            x = 5
+                            y = Ten()
+                        
+                        objA = A() 
+                        objA.y  invokes the descriptor "Ten"'s __get__() method
+            
+                6. Descriptor protocol methods and their signatures 
+                    a) __get__(self, obj, objtype):
+                    b) __set__(self, obj, value):
+                    c) __delete__(self, obj):
+                    d) __set_name__(self, objtype, name):
+                
+                    here, 
+                    self    === the descriptor instance itself, 
+                    obj     === the instance of the owner class on which the attribute is being looked up,
+                    objtype === the owner class itself, which instantiates the descriptor and bind that to a class variable
+                    name    === the class variable name which will be assigned with the descriptor instance
+                
+                7. The main motivation for descriptors is to provide a hook allowing objects stored in class variables to 
+                        control what happens during attribute lookup.
+            
+                8. NOTE: Python descriptors are instantiated just once per class. That means that every single instance 
+                        of a class containing a descriptor shares that descriptor instance. 
+            
+                9. Simple example of a descriptor: 
+                    import logging
+                    logging.basicConfig(level=logging.INFO)
+                
+                    class LoggedAccess: 
+                        def __set_name__(self, owner, name):
+                            self.public_name = name
+                            self.private_name = f"_{name}"
+                
+                        def __get__(self, obj, objtype=None):
+                            value = getattr(obj, self.private_name)
+                            logging.info(f"Accessing {self.public_name} giving {value}")
+                            return value 
+                    
+                        def __set__(self, obj, value):
+                            logging.info(f"Updating {self.public_name} to {value}")
+                            setattr(obj, self.private_name, value)
+                
+                    class Person: 
+                        age = LoggedAccess()
+                        name = LoggedAccess()
+                
+                        def __init__(self, name, age) -> None:
+                            self.name = name 
+                            self.age = age      invoking descriptor's get
+
+                    Roma = Person("Roma sen", 21)
+                    print(Roma.name)
+                    print(Roma.age)
         </p>
 
+
+        
         <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
         <p>
             * First Class Function 
