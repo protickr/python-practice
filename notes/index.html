@@ -326,6 +326,19 @@
 
             * issubclass(ChildClass, ParentClass)
 
+            * all these are available, 
+                # hasattr(obj, key)
+                # getattr(obj, key)
+                # setattr(obj, key, value)
+                # delattr(obj, key)
+
+                # isinstance()
+                # issubclass()
+
+                # type(Obj|Class)
+                # help(Obj|Class)
+                # vars(obj|Class)
+                # dir(obj|Class)
         </p>
 
         <h2>Operators</h2>
@@ -2264,10 +2277,28 @@
                     Roma = Person("Roma sen", 21)
                     print(Roma.name)
                     print(Roma.age)
+
+                10. descriptor invocation rules,
+                    # Descriptors are invoked by the __getattribute__() method.
+
+                    # Classes inherit this machinery from object, type, or super().
+                    
+                    # Overriding __getattribute__() prevents automatic descriptor calls because all the descriptor 
+                        logic is in that method.
+                    
+                    # object.__getattribute__() and type.__getattribute__() make different calls to __get__(). 
+                        first includes the instance and may include the class. The second puts in None for the instance 
+                        and always includes the class.
+                    
+                    # Data descriptors always override instance dictionaries.
+                    
+                    # Non-data descriptors may be overridden by instance dictionaries.
+
+                    # descriptor that implements either or both of __set__() or __delete__() methods is called data descriptor.
         </p>
 
 
-        
+
         <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
         <p>
             * First Class Function 
