@@ -2492,6 +2492,13 @@
                     15. Purpose of a metaclass 
                         a. The main purpose of a metaclass is to change the class automatically, when it's created.
                         b. You usually do this for APIs, where you want to create classes matching the current context.
+
+                *** When the class statement is executed, Python first executes the body of the class statement as a 
+                    normal block of code. The resulting namespace (a dict) holds the attributes of the class-to-be. 
+                    The metaclass is determined by looking at the baseclasses of the class-to-be (metaclasses are inherited), 
+                    at the __metaclass__ attribute of the class-to-be (if any) or the __metaclass__ global variable. 
+                    The metaclass is then called with the name, bases and attributes of the class to instantiate it.
+                    However, metaclasses actually define the type of a class, not just a factory for it.
         </p>
 
 
