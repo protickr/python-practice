@@ -2295,6 +2295,203 @@
                     # Non-data descriptors may be overridden by instance dictionaries.
 
                     # descriptor that implements either or both of __set__() or __delete__() methods is called data descriptor.
+
+            
+                * Metaclass 
+                    * all objects in python have a "__class__" attribute which stores from what class the object is created 
+
+                    1. 
+                        x = 1                   # equivalent to x = int(1)
+                        print(x, x.__class__)   # 1 &lt;class 'int'&gt;
+
+                        y = 1.5                 # equivalent to x = float(1.5)
+                        print(y, y.__class__)   # 1.5 &lt;class 'float'&gt;
+
+                        z = "this is a string"  # equivalent to z = str("this is a string")
+                        print(z, z.__class__)   # this is a string &lt;class 'str'&gt;
+
+                    2. A class is capable of creating objects (called instances) and the class itself is also an object
+                        that is why you can 
+                            a. assign the class to other variable 
+                            b. add attributes to the "Class that is also an object"
+                            c. pass the "class object" to other functions as parameter 
+                            d. also, assigning a "class object" to other variable will not change the 
+                                "class object's" __name__ attribute
+
+
+                    3. now lets see what is the "__class__" of a class ?
+                        class Foo:              # equivalent to Foo = type("Foo", (), {})
+                            pass 
+                        print(Foo.__class__)    # &lt;class 'type'&gt;
+
+                    4.  so "class Foo" is an object of class "type" and that is why we call "type" a metaclass 
+                        So, a metaclass is just the stuff that creates class objects.
+                        You can call it a 'class factory' if you wish.
+
+                    5. when we want to create an object from a class we use "ClassName()" that invokes the 
+                        object's obj.__call__(obj, *arguments, **args) method and special methods are  always 
+                        looked up on object's parent class and it returns an object of type "ClassName"
+
+                    6. similarly, a class-object is created by the 'type' metaclass by invoking type() with arguments
+                        type("class Name", (classes it inherits in a tuple), {class attributes in a dictionary})
+                        
+                        *** Everything is an object in Python, and they are all either instance of classes or 
+                            instances of metaclasses. Except for type.
+                            "type" is actually its own metaclass. This is not something you could reproduce in pure Python, 
+                            and is done by cheating a little bit at the implementation level.
+
+                    7. lets create class "Foo" using type() constructor of "type class"
+                        '''
+                        Example 1: class that inherits other class and has methods
+                            class Foo: 
+                                bar = True
+
+                            class MyClass(Foo):
+
+                                def echo_bar(self):
+                                    print(f"bar: {self.bar}")
+
+                            # is same as,
+
+                            def echo_bar(self):
+                                print(f"bar: {self.bar}")
+
+                            Foo = type('Foo', (), {"bar": True})
+                            MyClass = type('MyClass', (Foo, ), {"echo_bar": echo_bar})
+
+                            regular_cls_obj = MyClass()
+                            regular_cls_obj.echo_bar()
+                        '''
+
+                    8. type is the built-in metaclass Python uses, but of course, you can create your own metaclass.
+
+                        in python 2, you can add a "__metaclass__" attribute to your class definition, 
+                        like, 
+                            '''
+                                # The "__metaclass__" attribute 
+                                class Foo(object):
+                                    __metaclass__ = "Your choses meta class"
+                            '''
+
+                        if you do so, python will use the specified metaclass to create the class "Foo"
+                        You write class Foo(object) first, but the class object Foo is not created in memory yet.
+                        Python will look for __metaclass__ attribute in the class definition. If it finds it, it will use it 
+                        to create the "class object" Foo. 
+                        If it doesn't,  it will look for a __metaclass__ at the MODULE level, and try to do the same 
+                        Then if it can't find any __metaclass__ at all, it will use the the first parent's own metaclass
+                        
+                        If parent class used a __metaclass__ attribute that created parent class with type() (and not type.__new__()), 
+                        the subclasses will not inherit that behavior.
+
+                        the parent Class's __metaclass__ attribute is not inherited by the child class but the metaclass of the parent class 
+                        will be inherited i.e., child subclass inherits parent class's metaclass by parent.__class__
+
+
+
+                        PYTHON 3 
+                        the __metaclass__ attribute is no longer used, in favor of a keyword argument in the list of base classes.
+                        One thing added to metaclasses in Python 3 is that you can also pass attributes as keyword-arguments into a metaclass,
+                        class Foo(object, metaclass=something, kwarg1=value1, kwarg2=value2)
+                        
+                        and in Python 3 if you do this call with keyword arguments, like this:
+                        class Foo(object, metaclass=MyMetaclass, kwarg1=value1):
+                        It translates to this in the metaclass to use it:
+                        class MyMetaclass(type):
+                            def __new__(cls, clsname, bases, dct, kwargs1=default):
+
+
+                    9. Now the big question is, what can you put in __metaclass__ or metaclass=?
+                        The answer is something that can create a class.
+                        And what can create a class? type, or anything that subclasses or uses it.
+
+                    10. __metaclass__ can actually be any callable, it doesn't need to be a formal class
+                        the callable should ultimately call the type() constructor to create the class-object 
+
+                        Example 1: using a function as __metaclass__ value in the global scope
+
+                            def upper_attr(future_class_name, future_class_inherits, future_class_dict):
+                                uppercase_attrs = {attr if attr.startswith("__") else attr.upper(): v for attr, v in future_class_dict.items()}
+                                
+                                # let type() do the class creation 
+                                return type(future_class_name, future_class_inherits, uppercase_attrs)
+
+                            class Foo(metaclass=upper_attr):
+                                bar = 'bip'
+
+                            baz = Foo()
+
+                            print(Foo.__class__)
+                            print(baz.__class__)
+                            print(isinstance(baz, Foo))
+                            print(baz.BAR)
+
+                    11. now class body of Foo will be scanned for __metaclass__ attribute, then it will be looked for 
+                        in class parent list section we defined "metaclass" attribute and set its value to "upper_attr" function 
+                        which is a callable 
+                        
+                        now python will use upper_attr function to create a new "class object" name Foo
+                        so it will be called as,
+                        upper_attr('Foo', (), {"bar": 'bip'})
+
+
+                    12. a class as a metaclass value
+                        Example 2: Example 1 rewrite using an actual metaclass 
+                            class UpperAttrMetaClass(type):
+                                def __new__(upperattr_metaclass, future_class_name, future_class_inherits, future_class_dict):
+                                    uppercase_attrs = {attr if attr.startswith("__") else attr.upper(): v for attr, v in future_class_dict.items()} 
+                                    return type(future_class_name, future_class_inherits, uppercase_attrs)
+
+
+                        # now lets rewrite this example using short variable names 
+                            class UpperAttrMetaClass(type):
+                                def __new__(cls, clsname, bases, attrs):
+                                    # here __new__ takes an additional first argument "cls", __new__ always receives 
+                                    # the class it's defined in, as the first parameter
+
+                                    uppercase_attrs = {attr if attr.startswith("__") else attr.upper(): v for attr, v in attrs.items()} 
+                                    return type(clsname, bases, uppercase_attrs)
+
+
+                        class Foo(metaclass=UpperAttrMetaClass):
+                            bar = "bip"
+
+                    13. now lets rewrite this example by calling the __new__() function on type meta class instead 
+                        of calling type() directly 
+                        class UpperAttrMetaClass(type):
+                            def __new__(cls, clsname, bases, attrs):
+                                uppercase_attrs = {attr if attr.startswith("__") else attr.upper(): v for attr, v in attrs.items()} 
+                                return type.__new__(cls, clsname, bases, uppercase_attrs)
+
+                            # return type.__new__(cls, clsname, bases, uppercase_attrs) this call to __new__() 
+                            # of parent meta class "type"
+                            
+                            # appropriately sets Foo's __class__ to "UpperAttrMetaClass" as it should
+
+
+                        # now lets rewrite this example by calling the __new__() function of type meta class using super() 
+                            class UpperAttrMetaClass(type):
+                                def __new__(cls, clsname, bases, attrs):
+                                    uppercase_attrs = {attr if attr.startswith("__") else attr.upper(): v for attr, v in attrs.items()} 
+                                    return super().__new__(cls, clsname, bases, uppercase_attrs)
+
+                            class Foo(metaclass=UpperAttrMetaClass):
+                                bar = "bip"
+
+                            baz = Foo()
+                            print(Foo.__class__.__class__) &lt;class 'type'&gt;
+                            print(Foo.__class__)           &lt;class '__main__.UpperAttrMetaClass'&gt; 
+                            print(baz.__class__)           &lt;class '__main__.Foo'&gt;
+                            print(baz.BAR)                 bip
+
+
+                    14. so what does a metaclass do ?
+                        a. intercept a class creation
+                        b. modify the class
+                        c. return the modified class
+
+                    15. Purpose of a metaclass 
+                        a. The main purpose of a metaclass is to change the class automatically, when it's created.
+                        b. You usually do this for APIs, where you want to create classes matching the current context.
         </p>
 
 
