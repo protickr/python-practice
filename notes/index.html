@@ -2499,6 +2499,55 @@
                     at the __metaclass__ attribute of the class-to-be (if any) or the __metaclass__ global variable. 
                     The metaclass is then called with the name, bases and attributes of the class to instantiate it.
                     However, metaclasses actually define the type of a class, not just a factory for it.
+
+                
+                <strong>Abstract Class </strong>
+                    from abc import ABC, abstractmethod
+
+                    class Base(ABC):
+                        @abstractmethod
+                        def full_name(self):
+                            pass 
+
+                    class Person(Base):
+                        def __init__(self, firstname, lastname):
+                            self.firstname = firstname
+                            self.lastname = lastname
+
+                        def full_name(self):
+                            return f"{self.firstname} {self.firstname}"
+
+                    john = Person('John', 'Doe')
+
+
+                <strong>Dataclass</strong>
+                    # This module provides a decorator and functions for automatically adding generated special methods such 
+                    # as __init__() and __repr__() to user-defined classes. It was originally described in PEP 557.
+
+                    # The member variables to use in these generated methods are defined using PEP 526 type annotations. 
+                    # For example, this code:
+
+                        from dataclasses import dataclass
+
+                        @dataclass
+                        class InventoryItem:
+                            """Class for keeping track of an item in inventory."""
+                            name: str
+                            unit_price: float
+                            quantity_on_hand: int = 0
+
+                            def total_cost(self) -> float:
+                                return self.unit_price * self.quantity_on_hand
+                                
+                        # will add, among other things, a __init__() that looks like:
+
+                        def __init__(self, name: str, unit_price: float, quantity_on_hand: int = 0):
+                            self.name = name
+                            self.unit_price = unit_price
+                            self.quantity_on_hand = quantity_on_hand
+                            
+                    # Note that this method is automatically added to the class: it is not directly specified in 
+                    # the InventoryItem definition shown above.
         </p>
 
 
