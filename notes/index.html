@@ -609,21 +609,21 @@
                     # or raise exception manually by 
                         raise ExceptionType
 
-                catch NameError as ne: 
+                except NameError as ne: 
                     # notify user of the error that occurred 
 
-                catch Exception as e:
+                except Exception as e:
                     # exception of type Exception is caught 
                     # do what need to be done 
 
                 else: 
-                    # this block executes if there was no error or no catch block was executed 
+                    # this block executes if there was no error or no except block was executed 
 
                 finally: 
                     # this block executes always 
 
                 * else and finally block are optional 
-                * you can use more that one catch block and different Exception / Error class in different blocks.
+                * you can use more that one except block and different Exception / Error class in different blocks.
 
 
             * Duck Typing 
