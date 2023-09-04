@@ -3302,7 +3302,29 @@
                 
                   
                 * for easy datetime manipulation and access you can use "arrow" library 
+
             
+            <strong>Random</strong>
+                
+                import random 
+
+                * random float, int
+                    random_number = random.random()                     # 0 to 0.99999999
+                    random_with_range = random.uniform(1, 10)           # 1.0 to 9.99999999
+                    random_with_range_int = random.randint(1, 10)       # 1 to 10 # end value is also inclusive 
+
+                * random element from a list
+                    greetings = ['hi', 'hola', 'hello', 'howdy', 'hey']
+                    random_greeting = random.choice(greetings)          # choses random element from a list 
+                    random_greetings = random.choices(greetings, k=10)  # choses "k" random elements from a list 
+                    random_greetings_weighted = random.choices(greetings, k=10, weights=[10, 10, 15, 4, 6])  # adds weights to choices
+
+                * shuffle a list
+                    deck = list(range(1, 53))
+                    random.shuffle(deck)
+
+                * shuffle and get k unique values 
+                    hand = random.sample(deck, k=5)
 
         </p>
 
