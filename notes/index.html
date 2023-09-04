@@ -2548,8 +2548,6 @@
                     # the InventoryItem definition shown above.
         </p>
 
-
-
         <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
         <p>
             * First Class Function 
@@ -3004,6 +3002,80 @@
                     5. from my_module import * 
                         imports everything from a module 
                         Not recommended as it convolutes the global namespace
+
+            
+            <strong>File</strong>
+                f = open('file.txt', 'r+')
+                    # if we dont specify anything it default the file opening for reading 
+
+                * opening modes:
+                    1. explicitly specify for reading: 'r'
+                    2. writing: 'w'
+                    3. appending: 'a'
+                    4. reading and writing: 'r+'
+
+
+                * file object properties:
+                    1. fileobj.name     # opened file's name
+                    2. fileobj.mode     # opened file's mode
+                    3. fileobj.closed   # if file is closed or not
+
+
+                * files are by default opened in "UTF-8" text encoding 
+                * to open files in binary mode append "b" with read and write mode 
+
+                * READ 
+                    1. f_contents = f.read()                # all content of the file
+                    2. f_contents_list = f.readlines()      # all lines of the file in separate list items
+                    3. f_line = f.readline()                # every time we call f.readline() we get the next line of our file content
+
+                * if we read all the contents of our file we could run out of memory  and we don't want to do f.readline() 
+                    for thousands of time, so what to do ?
+                    we loop over the file contents
+                    for line in fileobj:
+
+
+                * WRITE 
+                    1. f.write("content")                   # writes "content" to file
+                    2. f_contents_list = f.readlines()      # all lines of the file in separate list items
+                    3. f_line = f.readline()                # every time we call f.readline() we get the next line of our file content
+
+
+                    write() also starts writing to file where it left off in the previous write() call
+                        we can also use seek() to change write() position
+                        f.write() does not overwrite everything it just overwrites what it needs to write
+                        to avoid overwriting to a file we can open it in append mode 
+
+
+
+                * Opening file with and without Context manager
+
+                    1. without context manager
+                        f = open('test.txt', 'r')
+                        # we need to explicitly close the file when we are done using it 
+                        f.close()
+
+
+                    2. with context manager
+                        with open('file.txt', 'r') as f: 
+                            pass 
+
+                        # whenever we exit the context manager's block the file is closed automatically
+                            it will also close the file if there is any exception or like that 
+                            we do have access to the file object outside of the context manager's scope but 
+                            we can not read from or write to it.
+
+
+                * read and write at the same time and copying binary files 
+                    with open('tax.jpg', 'rb') as rf: 
+                        with open('tax_copy.jpg', 'wb') as wf: 
+                            chunk_size = 100
+                            chunk = rf.read(chunk_size)
+
+                        while len(chunk) > 0:
+                                wf.write(chunk)
+                                chunk = rf.read(chunk_size)
+
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
