@@ -2548,7 +2548,7 @@
                     # the InventoryItem definition shown above.
         </p>
 
-        <h2> First class function, Closure, Decorator, Generator, Iterator</h2>
+        <h2> First class function, Closure, Decorator, Generator, Iterator, Context manager</h2>
         <p>
             * First Class Function 
                 A programming language said to have first class function if treats functions as first-class citizens 
@@ -2965,6 +2965,93 @@
                 When you extract another object, Python resumes just after the yield and continues until it 
                 reaches another yield (often the same one, but one iteration later). This continues until the 
                 function runs off the end, at which point the generator is deemed exhausted.
+
+
+            * Context manager 
+
+                * built in context manager for file 
+                    with open('test.txt', 'r') as rf: 
+                        pass 
+
+
+                * custom context manager 
+                    we can create that by using a class or a function 
+
+                1. class as context manager 
+                    class OpenFile():
+                        def __init__(self, filename, mode) -> None:
+                            self.filename = filename
+                            self.mode = mode
+
+                        going to be the setup of our context manager
+                        def __enter__(self):
+                            self.file = open(self.filename, self.mode)
+                            return self.file 
+
+                        going to be the tear down of our context manager
+                        def __exit__(self, exc_type, exc_val, traceback):
+                            self.file.close()
+
+
+                    with OpenFile('test2.txt', 'w') as f: 
+                        f.write("testing")
+
+                    print(f.closed)
+
+
+                2. function as context manager 
+                    we need to import contextmanager from contextlib module 
+                    we can use the "contextmanager" function as a decorator for a generator 
+                    and that generator function will be our context manager
+                    from contextlib import contextmanager 
+
+                    context-manager generator-function
+                    @contextmanager
+                    def open_file(file, mode):
+                        try: 
+                            f = open(file, mode)    setup 
+                            yield f                 with context manager block
+                        finally: 
+                            f.close()               teardown
+
+                    using the context manager
+                    with open_file('test3.txt', 'w') as f: 
+                        f.write("testing 3")
+
+                    print(f.closed)
+
+
+                3. custom context manager for custom needs 
+
+                    lets say we are doing something and the steps that we are following 
+                    can be divided into two common groups that requires 
+                        a. setting up 
+                        b. 
+                        c. tear down
+                        and we perform different operation in "step b"
+                    this specific use case is perfect for using a context manager 
+
+                    
+                    from contextlib import contextmanager
+                    import os
+
+                    @contextmanager
+                    def change_dir(destination_dir):
+                        try:
+                            cwd = os.getcwd()
+                            os.chdir(destination_dir)
+                            yield
+                        finally: 
+                            os.chdir(cwd)
+
+                    with change_dir('../3_class'):
+                        print(os.listdir())
+
+                    with change_dir('../2_modules'):
+                        print(os.listdir())
+
+
+                *** python does not have block scope that is why we can use variable defined try block can be used in finally block
         </p>
 
         <h2>Modules and standard library</h2>
