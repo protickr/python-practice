@@ -2983,12 +2983,12 @@
                             self.filename = filename
                             self.mode = mode
 
-                        going to be the setup of our context manager
+                        # going to be the setup of our context manager
                         def __enter__(self):
                             self.file = open(self.filename, self.mode)
                             return self.file 
 
-                        going to be the tear down of our context manager
+                        # going to be the tear down of our context manager
                         def __exit__(self, exc_type, exc_val, traceback):
                             self.file.close()
 
@@ -3003,16 +3003,17 @@
                     we need to import contextmanager from contextlib module 
                     we can use the "contextmanager" function as a decorator for a generator 
                     and that generator function will be our context manager
+
                     from contextlib import contextmanager 
 
-                    context-manager generator-function
+                    # context-manager generator-function
                     @contextmanager
                     def open_file(file, mode):
                         try: 
-                            f = open(file, mode)    setup 
-                            yield f                 with context manager block
+                            f = open(file, mode)    # setup 
+                            yield f                 # with context manager block
                         finally: 
-                            f.close()               teardown
+                            f.close()               # teardown
 
                     using the context manager
                     with open_file('test3.txt', 'w') as f: 
@@ -3162,6 +3163,146 @@
                         while len(chunk) > 0:
                                 wf.write(chunk)
                                 chunk = rf.read(chunk_size)
+                
+            
+            <strong>Date time</strong>
+                There are two types of date/datetime object: 
+                1. naive datetime (not aware of timezone or daylight saving)
+                      does not have enough information to determine timezones or daylight savings 
+                      but they are easier to work with if you don't need that level of details
+                
+                2. timezone aware datetime (aware of timezone)
+                
+                
+                from the "datetime" we can use 
+                    "date", "time", "datetime" class to create date, time and datetime object
+                    main module to working with dates in python is the "datetime" module
+                
+                
+                1. date: "datetime.date"
+                  (year: month : day)
+                
+                    a. specific date
+                      simplest way to create a naive date 
+                      pass year, month, date as integers with no leading zeroes
+                        d = datetime.date(2023, 9, 4)
+                
+                    b. today
+                        td = datetime.date.today()
+            
+                    * date object's methods,
+                        today = datetime.date.today()
+
+                        a. weekday()
+                            day_of_week = today.weekday()
+                    
+                        b. weekday()
+                            day_of_week_iso = today.isoweekday()
+                    
+                            weekday()     => Monday === 0
+                            isoweekday()  => Monday === 1
+                
+                2. time: "datetime.time"
+                   (hours: minutes : seconds : micro seconds)
+                   t = datetime.time(23, 56, 30, 964)
+
+
+                3. datetime: "datetime.datetime"
+                   (year-month-day, hours: minutes : seconds : micro seconds)
+                
+                    * how to create a datetime object
+                        dt = datetime.datetime(2023, 9, 4, 18, 30, 55, 100000)
+                    
+                    * datetime methods and properties
+                        a. get date out of a datetime 
+                            d = dt.date()
+                
+                        b. get time out of a datetime 
+                            t = dt.time()
+                
+                        c. get year out of a datetime 
+                            y = dt.year
+                
+                        d. get year out of a datetime 
+                            h = dt.hour
+                
+                    * alternative constructor to create a datetime object 
+                        a. returns datetime of current date and time according to local timezone
+                            dt_today = datetime.datetime.today()
+                
+                        b. similar to .today() but let us specify timezone 
+                            dt_now = datetime.datetime.now()
+                
+                        c. returns datetime of current date and time according UTC timezone
+                            dt_utc_now = datetime.datetime.utcnow()
+                
+                
+                4. timedelta: difference between two dates or times 
+                    tdelta = datetime.timedelta(days=7)
+                
+                    * time delta operations:
+                        lets see what the date would be 1 week from now 
+                        a. add time delta to a date 
+                          future_date = today + tdelta
+                
+                        b. subtract time delta from a date 
+                          past_date = today - tdelta
+                
+                
+                    a. if we add or subtract time delta to and from a date we get a date 
+                    date = date (+ or -) timedelta
+                
+                    b. if we add or subtract two dates we get a time delta 
+                    timedelta = date (+ or -) date
+                    
+                        Example 1: 
+                            bday = datetime.date(2024, 1, 11)
+                            today = datetime.date.today()
+                            till_bday = bday - today
+                            print(till_bday.total_seconds())
+                    
+                    * timedelta methods 
+                        1. timedelta.days 
+                        2. timedelta..total_seconds()
+                
+                
+                    * we can also add or subtract time delta duration from a datetime object 
+                        dt = datetime.datetime(2023, 9, 4, 18, 30, 55, 100000)
+                        tdelta = datetime.timedelta(hours=15) 
+                        future_datetime = dt + tdelta
+                
+                
+                5. timezone aware datetime 
+                    * using third party library "pytz"
+                        a. dt = datetime.datetime(2023, 9, 4, 12, 30, 45, tzinfo=pytz.UTC) 
+                        b. dt_utc_now = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+                        c. dt_utcnow = datetime.datetime.now(tz=pytz.UTC)
+                
+                    * what is the benefit of timezone aware datetime ?
+                      you can convert them to other timezone so everyone sees time according to their own timezone, 
+                
+                    * converting UTC datetime to Bangladesh Timezone, 
+                      dt_bd = dt_utcnow.astimezone( pytz.timezone('Asia/Dacca'))
+                
+                
+                    * transform a naive datetime into a timezone aware datetime 
+                        dt = datetime.datetime.now()          # naive datetime
+                        my_tz = pytz.timezone('Asia/Dacca')   "pytz" timezone object
+                        dt_bd = my_tz.localize(dt)            convert naive to timezone aware datetime with timezone set to 'UTC+06.00'
+                
+                    * transform datetime's timezone to other
+                        dt_cairo = dt_bd.astimezone(pytz.timezone("Africa/Cairo"))
+                
+                
+                6. date formatting to string
+                  formatted_date = dt_bd.strftime("%B %d, %Y")
+                
+                7. date from date string
+                  dt_from_str = datetime.datetime.strptime(formatted_date, "%B %d, %Y")
+                
+                  
+                * for easy datetime manipulation and access you can use "arrow" library 
+            
 
         </p>
 
