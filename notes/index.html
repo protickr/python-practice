@@ -3510,7 +3510,28 @@
                             pattern = re.compile(r'start', re.IGNORECASE)
                 
                             "IGNORECASE" shorthand is "I"
-                
+
+            
+            <strong>JSON</strong>
+
+            # import json module
+            import json 
+
+            # load JSON to python object
+                1. from JSON string
+                data = json.loads("JSON STRING")
+
+                2. from JSON file 
+                with open('file.json', 'r') as f: 
+                    data = json.load(f)
+
+            # output JSON from python object 
+                1. to JSON string 
+                json_str = json.dumps([python dictionary], indent=2, sort_keys=True)
+
+                2. to JSON string 
+                with open('./2_modules/states_out', 'w') as w:
+                    json.dump(data, w, indent=2, sort_keys=True)
 
         </p>
 
