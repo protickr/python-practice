@@ -3533,6 +3533,75 @@
                 with open('./2_modules/states_out', 'w') as w:
                     json.dump(data, w, indent=2, sort_keys=True)
 
+            <strong>Logging</strong>
+            * logging levels: there are 5 different logging levels 
+                1. DEBUG: 
+                2. INFO: 
+                3. WARNING:
+                4. ERROR 
+                5. CRITICAL: 
+            
+            * the default logging level is WARNING or above, meaning 
+                in default setting logging.debug() will not print to console or write to file 
+            
+            * we can set logging level 
+                logging.basicConfig(level=logging.DEBUG)
+            
+            * by default logging message is printed to console, lets change that to a file 
+                logging.basicConfig(filename="test.log")
+            
+            * how to change the default log message format 
+                logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s")
+            
+            * Example: root logger with all configs described above, 
+                logging.basicConfig(level=logging.DEBUG, filename="sample.log", format="%(asctime)s: %(name)s: %(levelname)s: %(message)s")
+            
+            
+            * individual logger for individual modules
+                if we import a module that uses the root logger then that root logger might suppress any other root logger 
+                used in the importer module.
+                so lets configure individual loggers for each module and configure them 
+            
+            * setting up individual logger and also different log output streams 
+                1. creating custom logger
+                    logger = logging.getLogger(__name__)
+            
+                2. setting default log level for the logger
+                    logger.setLevel(logging.DEBUG)
+                
+                3. file handler: to output logs 
+                    file_handler = logging.FileHandler('sample.log')
+            
+                4. stream handler: to output logs 
+                    stream_handler = logging.StreamHandler()
+                
+                5. formatter: to format log messages 
+                    formatter = logging.Formatter("%(asctime)s: %(name)s: %(levelname)s: %(message)s")
+            
+                6. add formatters to file handler and stream handler
+                    file_handler.setFormatter(formatter)
+                    stream_handler.setFormatter(formatter)
+            
+                7. setting log level "ERROR" to file handler that will store "ERROR" or "CRITICAL" logs
+                    file_handler.setLevel(logging.ERROR) 
+            
+                8. setting log level "DEBUG" to stream handler that will store "DEBUG" or upper level logs
+                    stream_handler.setLevel(logging.DEBUG)
+            
+                9. adding handlers to the logger 
+                    logger.addHandler(file_handler)
+                    logger.addHandler(stream_handler)
+            
+                10. now if we log a message as logger.info() 
+                    it should go to the stream (i.e., console) but the INFO level log will not go to the log file 
+                    log file will only contain log messages that is of level ERROR or CRITICAL 
+            
+                *** to make it work properly so that the logger logs out messages to different handlers/streams 
+                    first set the logger's log level to the lowest to make it work as we want
+            
+            * how to use custom logger
+                1. logger.exception("Tried to divide by 0")
+                2. logger.info(f"Div: {num_1} / {num_2} = {div_result}")
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
