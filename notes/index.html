@@ -3533,6 +3533,7 @@
                 with open('./2_modules/states_out', 'w') as w:
                     json.dump(data, w, indent=2, sort_keys=True)
 
+
             <strong>Logging</strong>
             * logging levels: there are 5 different logging levels 
                 1. DEBUG: 
@@ -3602,6 +3603,93 @@
             * how to use custom logger
                 1. logger.exception("Tried to divide by 0")
                 2. logger.info(f"Div: {num_1} / {num_2} = {div_result}")
+
+            
+            <strong>OS</strong>
+            import os 
+            # gives access to underlying operating system 
+            
+            1. get current executing script's path
+                current_working_dir = os.getcwd()
+            
+            2. change directory 
+                os.chdir('C:\\Users\\proti\\Desktop\\practice\\python\\2_modules')
+            
+            3. list directory and files 
+                you can also pass a path, and by default it will list the directory in current directory
+                dirs = os.listdir()
+            
+            
+            4. make directory 
+                a. os.mkdir("directory-name"): creates directory 
+                    os.mkdir("test")
+                
+                b. os.makedirs("directory-name"): creates directory but you can also create nested directories as well
+                    os.makedirs("test/sub/data")
+            
+            
+            5. delete directory 
+                a. os.rmdir("directory-name"): deletes directory 
+                    os.rmdir("test/sub/data")
+            
+                b. os.makedirs("directory-name"): deletes directory but you also deletes 
+                    os.removedirs("test/sub/data")
+            
+            
+            6. rename files 
+                os.rename('test.txt', 'rename.txt')
+            
+            7. info about a file 
+                stat = os.stat('rename.txt')
+            
+                a. get file size 
+                    size = stat.st_size
+            
+                b. get last modification time
+                    mod_time = stat.st_mtime returns timestamp 
+            
+                * timestamp to datetime 
+                    from datetime import datetime 
+                    mod_time_dt = datetime.fromtimestamp(mod_time)
+                    
+            
+            8. directory tree and files within a directory 
+                os.walk("path/to/directory")
+                    # is a generator and in each iteration returns a tuple with 3 values, 
+                        a. directory path 
+                        b. directory within that directory 
+                        c. files within that path 
+                        
+                for dirpath, dirnames, filenames in os.walk(os.getcwd()): 
+                    print(dirpath, dirnames, filenames, sep="\n")
+            
+            9. we can get environment variables of the operating system
+                onedrive = os.environ.get('OneDrive')
+
+
+
+            <strong>os.path</strong> 
+            10. os.path.join(path1, path2)
+                we can use os.path module to join paths and we don't need to worry about slashes 
+                file_path = os.path.join(onedrive, 'text.txt') # C:\Users\proti\OneDrive\text.txt
+            
+            11. os.path.basename("/tmp/test.txt") # test.txt
+            
+            12. os.path.dirname("/tmp/test.txt")  # /tmp
+            
+            13. os.path.split("/tmp/test.txt")    # (/tmp, test.txt)
+            
+            14. os.path.exists('/tmp/test.txt')   # check if a path exits 
+            
+            15. os.path.isdir('/tmp/asdfa')       # returns True or False if it is a directory
+            
+            16. os.path.isfile('/tmp/asdfa')      # returns True or False if it is a file 
+            
+            17. os.path.splitext('/tmp/test.txt') # ('/tmp/test', '.txt')
+            
+            18. file location of a module in the os
+                os_module_location = os.__file__
+            
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
