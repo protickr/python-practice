@@ -3689,7 +3689,82 @@
             
             18. file location of a module in the os
                 os_module_location = os.__file__
+
+            <strong>zipfile</strong>
+            * ZIP Archive: crate, compress, extract and list file names 
             
+                import zipfile
+                
+                # 1. creating a new zip file manually
+                    my_zip = zipfile.ZipFile('files.zip', 'w')
+                
+                # 2. add files to "files.zip" archive
+                    my_zip.write('test.txt')
+                    my_zip.write('thumbnail.png')
+                
+                # 3. finalize and close zip archive manually
+                    my_zip.close()
+            
+            
+            * we can do the same with context manager 
+                with zipfile.ZipFile('files.zip', 'w') as my_zip: 
+                    my_zip.write('test.txt')
+                    my_zip.write('thumbnail.png')
+            
+            
+            
+            * compress a zip archive,
+                with zipfile.ZipFile('files.zip', 'w', compression=zipfile.ZIP_DEFLATED) as my_zip: 
+                    my_zip.write('test.txt')
+                    my_zip.write('thumbnail.png')
+                
+                # compression=zipfile.ZIP_DEFLATED
+            
+            
+            * extract a zip archive 
+                a. list all file names in the archive
+                    with zipfile.ZipFile('files.zip', 'r') as my_zip: 
+                        all_file_names = my_zip.namelist()
+            
+                b. extract all files to a specified directory 
+                    with zipfile.ZipFile('files.zip', 'r') as my_zip: 
+                        my_zip.extractall('files')
+            
+                c. extract specific files to a specific directory
+                    with zipfile.ZipFile('files.zip', 'r') as my_zip: 
+                        my_zip.extract('thumbnail.png', 'extracted')
+            
+            
+        <strong>shutil</strong>
+        import shutil 
+        
+        # convenient to zip or unzip an entire directory 
+        # also let us create and extract an archive of other types other than "zip" such as, tar.gz, tar.bz2, tar etc. 
+        # it does not allow us to add or remove files to or from a zip archive 
+        
+        1. create zip
+            shutil.make_archive('files', 'zip', 'files')
+            shutil.make_archive('archive_name', 'archive type', 'source directory')
+        
+        2. extract zip
+            shutil.unpack_archive('files.zip', 'files_unpacked')
+            shutil.unpack_archive('archive source', 'extracted directory name')
+        
+        3. create tar.gz archive
+            shutil.make_archive('archive', 'gztar', 'files')
+        
+        
+        * download data into a zip file and read file names from that zip file
+            import requests not a built in module
+            import zipfile 
+        
+            r = requests.get('https://github.com/protickr/forkify-app/archive/refs/heads/master.zip')
+        
+            with open('data.zip', 'wb') as my_zip: 
+                my_zip.write(r.content)
+        
+            with zipfile.ZipFile('data.zip', 'r') as data_zip: 
+                data_zip.extractall('extracted')
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
