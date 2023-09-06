@@ -3949,6 +3949,164 @@
 
                 finish = time.perf_counter()
                 print(f'finished in {round(finish - start , 2)} seconds')
+
+
+            <strong>Multiprocessing</strong>
+            * we can use multi processing on CPU bound task and I/O bound task to speed up the execution
+
+            * ways to parallel execution
+                * old way: multiprocessing.Process()
+                    * manually
+                        1. creating individual processes for each task
+                            p1 = multiprocessing.Process(target=do_something)
+                            p2 = multiprocessing.Process(target=do_something)
+            
+                        2. start the processes
+                            p1.start()
+                            p2.start()
+                        
+                        3. join the processes to the parent process so that python does not 
+                        execute consecutive statements before the spawned process finishes
+                            p1.join()
+                            p1.join()
+            
+                    * by loop         
+                        lets spawn 10 processes to see the effect of multiprocessing better, 
+                        1. pass arguments to function running in a separate process
+                        processes = [multiprocessing.Process(target=do_something) for _ in range(10)]
+                        
+                        2. start the processes
+                        for process in processes: 
+                            process.start()
+                        
+                        3. join the processes to the parent process so that python does not 
+                        execute consecutive statements before the spawned process finishes
+                        for process in processes: 
+                            process.join()
+            
+                    
+                    * pass arguments to function running in a separate process
+                        unlike threads the arguments passed to multiprocessing process must be serialized by pickle
+                            processes = [multiprocessing.Process(target=do_something, args=[4]) for _ in range(10)]
+            
+                    * Serializing: basically serializing something with pickle means that we are converting python objects into a 
+                        format that can be deconstructed and reconstructed in another python script
+            
+            
+            
+                * new way: concurrent.futures.ProcessPoolExecutor()
+                    * best to be used with a context manager
+                        with concurrent.futures.ProcessPoolExecutor() as executor: 
+            
+                    * executor.submit() 
+                        method schedules a function to be executed and returns a future-object 
+                        future-object basically encapsulates the execution of our function and allows us to check on it 
+                        after it has been scheduled. So we can check if it is running or done and also the result
+                        if we grab the result it will return the return value of the function
+                    
+                            f1 = executor.submit(do_something, 1.5)
+                            f2 = executor.submit(do_something, 1.5)
+            
+                            print(f1.result())
+                            print(f2.result())
+                
+                    * lets create a loop to add 10 processes that runs "do_something" function with argument "1"
+                        results = [executor.submit(do_something, 1) for _ in range(10)]
+            
+                    * to get these result we can use another function from the "concurrent.futures" module
+                        called, concurrent.futures.as_completed([process_list]):
+                        which returns an iterator that we can loop over that will yield the results of our processes 
+                        as they are completed 
+                
+                        for f in concurrent.futures.as_completed(results):
+                            print(f.result())
+            
+                    * executor.submit() - submits each function one at a time by using a loop, to submit a list of function we can use 
+                      executor.map() method. Also note that when we were using submit() method it returned "future-object" but when we 
+                      use the .map() method it just returns the results. Now, executor.map() is going to run the process in parallel but 
+                      instead of returning the results as they are completed like executor.submit() did, map() is going to return the
+                      results in the order the processes were started. So to loop over the result returned by executor.map() we can
+                      just use the for loop
+            
+                    * results = executor.map(do_something, [arguments for each call separated by comma])
+            
+                    * also the context manager will automatically join the processes to the main process so that consecutive 
+                        code blocks do not executes before all processes finishes.
+                        And the same is true for threads with "concurrent.future" module.
+                    
+
+            
+            * Exceptions 
+              If our long-running-task-function raises an exception it wont actually raise that exception while running the process 
+              the exception will be raised when its value is retrieved from the results iterator so if you need to handle any exception
+              then you can do that when retrieving the value from the iterator. 
+              And the same is true for threading also
+            
+            
+            * common exception in windows and solution
+                we have to start the process from the "main" block, 
+                because windows uses "spawn" instead of "fork" to create a process
+                multiprocessing.set_start_method('fork', force=True)
+                does not work on windows
+                    if __name__ == "__main__":    
+                        process.start()
+                        process.join()
+                
+            
+            * practical example 
+                import time
+                import os
+                from PIL import Image, ImageFilter
+                import concurrent.futures
+            
+                img_names = [
+                    "photo-1516117172878-fd2c41f4a759.jpg",
+                    "photo-1541698444083-023c97d3f4b6.jpg",
+                    "photo-1530224264768-7ff8c1789d79.jpg",
+                    "photo-1532009324734-20a7a5813719.jpg",
+                    "photo-1524429656589-6633a470097c.jpg",
+                    "photo-1516972810927-80185027ca84.jpg",
+                    "photo-1550439062-609e1531270e.jpg",
+                    "photo-1493976040374-85c8e12f0c0e.jpg",
+                    "photo-1522364723953-452d3431c267.jpg",
+                    "photo-1549692520-acc6669e2f0c.jpg",
+                    "photo-1530122037265-a5f1f91d3b99.jpg",
+                    "photo-1504198453319-5ce911bafcde.jpg",
+                    "photo-1564135624576-c5c88640f235.jpg"
+                ]
+            
+            
+                def change_dir_to_base():
+                    file_path = os.path.abspath(__file__)
+                    directory_path = os.path.dirname(file_path)
+                    processed_dir = os.path.join(directory_path, 'processed')
+                    if not os.path.exists(processed_dir):
+                        os.mkdir(processed_dir)
+                    os.chdir(directory_path)
+            
+            
+                # start timer
+                start = time.perf_counter()
+            
+                # change current working directory
+                change_dir_to_base()
+            
+            
+                def process_image(img_name):
+                    img = Image.open(os.path.join('images', img_name))
+                    img = img.filter(ImageFilter.GaussianBlur(15))
+                    img.thumbnail(size=(1200, 1200))
+                    img.save(f"processed/{img_name}")
+                    print(f"{img_name} was processed")
+            
+            
+                if __name__ == "__main__":
+                    with concurrent.futures.ProcessPoolExecutor() as executor:
+                        results = executor.map(process_image, img_names)
+            
+                    finish = time.perf_counter()
+                    print(f'finished in {round(finish - start, 2)} seconds')
+            
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
