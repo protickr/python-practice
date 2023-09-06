@@ -3734,37 +3734,221 @@
                     with zipfile.ZipFile('files.zip', 'r') as my_zip: 
                         my_zip.extract('thumbnail.png', 'extracted')
             
+
+            <strong>shutil</strong>
+            import shutil 
             
-        <strong>shutil</strong>
-        import shutil 
-        
-        # convenient to zip or unzip an entire directory 
-        # also let us create and extract an archive of other types other than "zip" such as, tar.gz, tar.bz2, tar etc. 
-        # it does not allow us to add or remove files to or from a zip archive 
-        
-        1. create zip
-            shutil.make_archive('files', 'zip', 'files')
-            shutil.make_archive('archive_name', 'archive type', 'source directory')
-        
-        2. extract zip
-            shutil.unpack_archive('files.zip', 'files_unpacked')
-            shutil.unpack_archive('archive source', 'extracted directory name')
-        
-        3. create tar.gz archive
-            shutil.make_archive('archive', 'gztar', 'files')
-        
-        
-        * download data into a zip file and read file names from that zip file
-            import requests not a built in module
-            import zipfile 
-        
-            r = requests.get('https://github.com/protickr/forkify-app/archive/refs/heads/master.zip')
-        
-            with open('data.zip', 'wb') as my_zip: 
-                my_zip.write(r.content)
-        
-            with zipfile.ZipFile('data.zip', 'r') as data_zip: 
-                data_zip.extractall('extracted')
+            # convenient to zip or unzip an entire directory 
+            # also let us create and extract an archive of other types other than "zip" such as, tar.gz, tar.bz2, tar etc. 
+            # it does not allow us to add or remove files to or from a zip archive 
+            
+            1. create zip
+                shutil.make_archive('files', 'zip', 'files')
+                shutil.make_archive('archive_name', 'archive type', 'source directory')
+            
+            2. extract zip
+                shutil.unpack_archive('files.zip', 'files_unpacked')
+                shutil.unpack_archive('archive source', 'extracted directory name')
+            
+            3. create tar.gz archive
+                shutil.make_archive('archive', 'gztar', 'files')
+            
+            
+            * download data into a zip file and read file names from that zip file
+                import requests not a built in module
+                import zipfile 
+            
+                r = requests.get('https://github.com/protickr/forkify-app/archive/refs/heads/master.zip')
+            
+                with open('data.zip', 'wb') as my_zip: 
+                    my_zip.write(r.content)
+            
+                with zipfile.ZipFile('data.zip', 'r') as data_zip: 
+                    data_zip.extractall('extracted')
+        </p>
+
+        <h2>Threading, Multiprocessing and Subprocess</h2>
+        <p>
+            <strong>Threading</strong>
+                        
+            1. CPU bound task: task that heavily uses the CPU 
+            2. I/O bound task: task that dependent on the I/O, waiting for an input or output operation to be completed
+
+            * When to use threading: (concurrency) 
+                so when it comes to threading we are gonna see benefits when our tasks are I/O bound
+                which means we are doing a lot of waiting around for input and output operation like reading data from disk or 
+                network operation 
+
+            * When to use multiprocessing: (parallelism)
+                if our task is doing a lot of data crunching and are CPU bound then we are not gonna get that much of a benefit
+                from using threading 
+                for CPU bound task then we are likely to use multiprocessing and run tasks in parallel instead 
+
+            * so when we run something concurrently by using threads its not actually going to run the code at the same time 
+                it just gives the illusion of running code at the same time because when it comes to a point where it just 
+                waiting around it just going to go ahead and move forward with the script and run other code while the I/O operations 
+                finish. The I/O waiting time is overlapped with the concurrent function execution 
+
+
+            *** our long running task 
+                def do_something(second):
+                    print(f'Sleeping {second} second(s)')
+                    time.sleep(second)
+                    return f'Done sleeping...{second}'
+
+
+
+            # How to achieve concurrency in python ?
+            # old way 
+            # threading module 
+                it is in the standard library
+
+                1. create a thread for a long running I/O bound task 
+                    t1 = threading.Thread(target=long_running_task_function)
+
+                2. start a thread 
+                    t1.start()
+
+                3. join a thread
+                    the program will continue on to execute next statements following t1.start() 
+                    meaning the thread becomes asynchronous 
+                    to make any consecutive statements to run after a thread has finished execution 
+                    we should join the thread to the synchronous code execution flow like, 
+                        t1.join()
+
+                4. passing argument to a long-running-task-function that runs in a thread 
+                    thread = threading.Thread(target=long-running-task-function, args=[1.5])
+
+                * Example: 1
+                    t1 = threading.Thread(target=do_something)
+                    t2 = threading.Thread(target=do_something)
+                    t1.start()
+                    t2.start()
+                    t1.join()
+                    t2.join()
+
+
+                * Example: 2
+                    threads = []
+                    for _ in range(10):
+                        t = threading.Thread(target=do_something, args=[1.5])
+                        t.start()
+                        threads.append(t)
+
+                    for t in threads: 
+                        t.join()
+
+
+
+            * new way 
+                # using concurrent.futures.ThreadPoolExecutor() object 
+
+                * when we use "Thread Pool Executor" it is usually best to use it with a context manager
+                    ThreadPoolExecutor() returns an executor object and on that we can call different functions
+                        # with concurrent.futures.ThreadPoolExecutor() as executor:
+
+                * If we want to create a thread for a sub-routine once at a time use executor.submit()
+                    1. executor.submit(long-running-task-function, arg1, arg2, arg3)
+
+
+                    * The submit() method schedules a function to be executed and returns a "future" object (promises ?)
+                        the future object basically encapsulate execution of our function and allows us to check in on it
+                        after it has been scheduled, so we can check if it is running or done and also check the result 
+
+                    * if we call 
+                    future_object.result()
+                        then it waits for the long running task function that is being executed in different thread to finish and 
+                        produce the result it is waiting for 
+                            [asynchronous to synchronous behavior (more like await ?)]
+
+                * we can submit multiple tasks to be executed in their own thread and store the respective returned 
+                    future-objects using a list comprehension or a loop and then pass that future-object list to as_completed()
+                    and it will return an iterator 
+                        concurrent.futures.as_completed(future-object-list)
+
+                    then we will be able to iterate through the iterator to check on the results of those background tasks 
+                    the iterator will yield the result of our threads as they are completed
+                    
+                        [__next__() will return the result of the thread which has finished at that time [my explanation]]
+
+
+                * Example: 1 
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        secs = [5, 4, 3, 2, 1]
+                        results = [executor.submit(do_something, sec) for sec in secs]
+
+                        for f in concurrent.futures.as_completed(results):
+                            print(f.result())
+
+
+                * Example: 2
+                    we can also submit our tasks to threads using executor.map() method like this, 
+                    
+                        with concurrent.futures.ThreadPoolExecutor() as executor:
+                            secs = [5, 4, 3, 2, 1]
+                            results = executor.map(do_something, secs)
+
+                            for result in results:
+                                print(result)
+
+                    and using threads this way, will only yield the result in the same order as it was passed the background tasks to it. 
+                        also it does not return a future-object, instead returns the results of those threads
+
+
+            * Example: practical 
+                import requests
+                import time 
+                import os 
+                import concurrent.futures
+
+                start = time.perf_counter()
+                img_urls = [
+                    'https://images.unsplash.com/photo-1516117172878-fd2c41f4a759',
+                    'https://images.unsplash.com/photo-1532009324734-20a7a5813719',
+                    'https://images.unsplash.com/photo-1524429656589-6633a470097c',
+                    'https://images.unsplash.com/photo-1530224264768-7ff8c1789d79',
+                    'https://images.unsplash.com/photo-1564135624576-c5c88640f235',
+                    'https://images.unsplash.com/photo-1541698444083-023c97d3f4b6',
+                    'https://images.unsplash.com/photo-1522364723953-452d3431c267',
+                    'https://images.unsplash.com/photo-1513938709626-033611b8cc03',
+                    'https://images.unsplash.com/photo-1507143550189-fed454f93097',
+                    'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e',
+                    'https://images.unsplash.com/photo-1504198453319-5ce911bafcde',
+                    'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99',
+                    'https://images.unsplash.com/photo-1516972810927-80185027ca84',
+                    'https://images.unsplash.com/photo-1550439062-609e1531270e',
+                    'https://images.unsplash.com/photo-1549692520-acc6669e2f0c'
+                ]
+
+                def change_dir_to_images():
+                    file_path = os.path.abspath(__file__)
+                    directory_path = os.path.dirname(file_path)
+                    image_dir = os.path.join(directory_path, "images")
+                    image_dir_exists = os.path.exists(image_dir)
+
+                    if not image_dir_exists:
+                        os.mkdir(image_dir)
+                    os.chdir(image_dir)
+
+
+                def download_image(img_url): 
+                    img_bytes = requests.get(img_url).content
+                    img_name = img_url.split("/")[3]
+                    img_name = f"{img_name}.jpg"
+
+                    with open(img_name, 'wb') as img_file: 
+                        img_file.write(img_bytes)
+                        print(f"downloaded {img_file}")
+
+                # change directory to "images" before downloading file 
+                change_dir_to_images()
+
+                # download all images into images directory concurrently
+                with concurrent.futures.ThreadPoolExecutor() as executor: 
+                    executor.map(download_image, img_urls)
+
+                finish = time.perf_counter()
+                print(f'finished in {round(finish - start , 2)} seconds')
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
