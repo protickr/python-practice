@@ -4107,6 +4107,65 @@
                     finish = time.perf_counter()
                     print(f'finished in {round(finish - start, 2)} seconds')
             
+            
+            <strong>Sub process</strong>
+            import subprocess
+
+            1. to run a command 
+                subprocess.run('ls -la', shell=True)
+
+                if you using shell=True make sure it is an authorized command or it might become a security hazard
+                subprocess.run() returns a CompletedProcess(args='dir', returncode=0)object and prints the program 
+                execution output to the console.
+                    p1 = subprocess.run('dir', shell=True)
+
+            2. pass argument to invoked application in the terminal like this, 
+                subprocess.run(['ping', 'google.com' ]) 
+
+            3. what we can do with the returned "CompletedProcess" object 
+                    a. obj.args
+                    b. obj.returncode
+                    c. obj.stdout #None
+
+            4. capture output 
+                cpo = subprocess.run(['ping', 'google.com'], capture_output=True)
+                the output is stored in the stdout in binary mode to decode that into a normal string 
+                    cpo.stdout.decode()
+
+            5. if we want to capture the subprocess output as text, we can set argument "text=True"
+                cpo = subprocess.run(['ping', 'google.com'], capture_output=True, text=True)
+
+            6. pipe subprocess's output (stdout, stderr)
+                cpo = subprocess.run(['ping', 'google.com'], stdout=subprocess.PIPE, text=True)
+                stdout=subprocess.PIPE
+
+            7. redirect pipe subprocess's output (stdout, stderr) to file
+                with open('output.txt', 'w') as f: 
+                    subprocess.run(['ping', 'google.com'], stdout=f, text=True)
+
+            8. what happens when errors 
+                cpo = subprocess.run(['cd', 'dne'], capture_output=True, text=True, shell=True)
+                print(cpo.returncode)
+                python does not throw an exception if an external command fails
+                instead it just returns non 0 error code 
+
+            9. to check error message from a subprocess 
+                cpo.stderr
+
+            10. if you want python to throw an exception if a subprocess encounters an error you can 
+                set the "check=True"
+                cpo = subprocess.run(['cd', 'dne'], capture_output=True, text=True, shell=True, check=True)
+
+            11. if you want to ignore error: stderr=subprocess.DEVNULL
+                cpo = subprocess.run(['cd', 'dne'], stderr=subprocess.DEVNULL)
+
+            12. how to pipe output of a subprocess as input of another subprocess 
+                p1 = subprocess.run(['cd', 'dne'], capture_output=True, text=True)
+                p2 = subprocess.run(['grep', '-n', 'test'], capture_output=True, text=True, input=p1.stdout)
+
+            13. you can also use | operator in the command directly 
+                subprocess.run('cat test.txt | grep -n test', capture_output=True, text=True, shell=True)
+
         </p>
 
         <h2>Devlopment tools, package installer and Virtual environments</h2>
