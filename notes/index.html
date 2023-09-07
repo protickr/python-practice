@@ -3873,6 +3873,9 @@
                 * add other type of files as attachment 
                     generic bag of attachment: maintype='application', subtype='octet-stream',
                     msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename='my-file.pdf')
+
+                * send email as HTML 
+                    # msg.add_alternative("html markup", subtype="html")
         </p>
 
         <h2>Threading, Multiprocessing and Subprocess</h2>
