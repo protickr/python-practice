@@ -3826,6 +3826,53 @@
                 "timeout = n" seconds
                 res = requests.get("https://httpbin.org/delay/4", timeout=3)
 
+            
+
+
+            <strong>Send Email</strong>
+
+            * start an email development server in the localhost 
+                >_$  python -m smtpd -c DebuggingServer -n localhost:1025
+            
+            * send email to that debugging mail server by, 
+                with smtplib.SMTP('localhost', '1025') as smtp:
+            
+
+
+            * send email 
+                * way 1:  with smtplib.SMTP('smtp.gmail.com', '587') as smtp:
+                    smtp.ehlo()
+                    smtp.starttls()
+                    smtp.ehlo()
+                    smtp.sendmail(EMAIL_ADDRESS, 'protick@gmail.com', msg)
+            
+
+
+                * Using "EmailMessage" module to create the message 
+                    from email.message import EmailMessage
+                
+                    EMAIL_ADDRESS = 'protick@gmail.com' 
+                    EMAIL_PASS = "xxazikiebrzxroi"
+                
+                    msg = EmailMessage()
+                    msg['Subject'] = "Grab dinner this weekend ?"
+                    msg['From'] = EMAIL_ADDRESS
+                    msg['To'] = 'protick@gmail.com'
+                    msg.set_content("How about dinner at 6pm this sunday ?")
+                
+                    with smtplib.SMTP_SSL('smtp.gmail.com', '465') as smtp:    
+                        smtp.login(EMAIL_ADDRESS, EMAIL_PASS)
+                        smtp.sendmail(EMAIL_ADDRESS, 'protick@gmail.com', msg)
+                        smtp.send_message(msg)
+                
+                * add attachment 
+                    msg.add_attachment(file_data, maintype='image', subtype=file_type, filename=file_name)
+
+                * add multiple attachment: just loop through file list and add them one by one 
+                
+                * add other type of files as attachment 
+                    generic bag of attachment: maintype='application', subtype='octet-stream',
+                    msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename='my-file.pdf')
         </p>
 
         <h2>Threading, Multiprocessing and Subprocess</h2>
