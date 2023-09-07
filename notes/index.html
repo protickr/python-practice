@@ -3765,6 +3765,67 @@
             
                 with zipfile.ZipFile('data.zip', 'r') as data_zip: 
                     data_zip.extractall('extracted')
+
+            
+            <strong>Requests module</strong>
+            * requests module is not available within the standard library, we have to install it first 
+                import requests 
+            
+            1. GET request 
+                res = requests.get("https://xkcd.com/936/")
+                # dir(res)
+                # help(res)
+
+            2. get the response in unicode text
+                res.text
+
+            3. download page image 
+                res = request.get('https://imgs.xkcd.com/comics/password_strength.png')
+                with open("comic.png", 'wb') as f: 
+                    f.write(res.content)
+
+            4. check status code of a response 
+                res.status_code
+
+            5. requests library check if res status is okay, i.e., response is not 4xx or 5xx
+                res.ok
+
+            6. headers info 
+                res.headers
+
+            7. query parameters 
+                we can pass parameters directly in the URL but requests module lets us 
+                define our query parameters in a dictionary and the modules uses the dictionary to 
+                generate the URL with query params 
+                    payload = { 'page': 2, 'count': 25 }
+                    res = requests.get('https://httpbin.org/get', params=payload)
+                    print(res.url, res.text)
+
+            
+            8. POST request 
+                payload = {
+                    "username": "protick", 
+                    "password": "testing"
+                }
+
+                res = requests.post("https://httpbin.org/post", data=payload)
+                    res.text, res.url, res.json()
+
+            9. PUT request 
+                res = requests.put("https://httpbin.org/post", data=payload)
+
+            
+            10. authentication 
+                not all authentication are done through form base authentication 
+                some are done through something called "basic authentication"
+                if you need to pass credentials using base authentication, 
+                    basic_auth_url = "http://httpbin.org/basic-auth/protick/testing"
+                    res = requests.get(basic_auth_url, auth=("protick", "testing"))
+
+            11. set timeout for a request 
+                "timeout = n" seconds
+                res = requests.get("https://httpbin.org/delay/4", timeout=3)
+
         </p>
 
         <h2>Threading, Multiprocessing and Subprocess</h2>
