@@ -4330,6 +4330,17 @@
 
                     5. deactivate 
                         deactivates the currently active virtual environment 
+            
+            * when we execute a python script after activating a virtual environment, all installed packages in that environment are 
+                available to that execution context. We can achieve the same effect of activating the virtual environment just 
+                by invoking the python interpreter from that virtual environment using an absolute path 
+
+            * there are task schedulers available in UNIX systems such as Cron 
+                * we can add a cron task by 
+                    > crontab -e 
+                    > */10 * * * * ~/abs/path/to/python/interpreter ~/abs/path/to/python/script
+
+            * in windows task scheduler is also available 
                     
         </p>
 
