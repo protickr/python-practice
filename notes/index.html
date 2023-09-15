@@ -2270,7 +2270,7 @@
                 
                         def __init__(self, name, age) -> None:
                             self.name = name 
-                            self.age = age      invoking descriptor's get
+                            self.age = age      invoking descriptor's __set__
 
                     Roma = Person("Roma sen", 21)
                     print(Roma.name)
@@ -2288,6 +2288,14 @@
                         first includes the instance and may include the class. The second puts in None for the instance 
                         and always includes the class.
                     
+                *** WHY descriptors work ?
+                    # why calling 
+                        self.age = 10 
+                        invokes descriptor class's set method ?
+                        why does not it just create a new instance variable "age" and set it to 10 ?
+
+                        because of look up precedence of data descriptors over instance dictionary
+
                     # Data descriptors always override instance dictionaries.
                     
                     # Non-data descriptors may be overridden by instance dictionaries.
