@@ -3414,10 +3414,14 @@
                 
                     3. ? : 0 or 1 
                 
-                    4. {3} : exactly 3 instance of preceding pattern
+                    4. {3} : exactly 3 instances of preceding pattern
                         pattern = re.compile(r'\d{3}.\d{3}.\d{4}')
                 
-                    5. {3, 7} : Range of numbers (Minimum, Maximum)
+                    5. {3, 7} : Range of numbers (Minimum, Maximum), minimum 3 instances and maximum 7 instances
+
+                    6. {, 7} : Range of numbers (0, Maximum)
+
+                    7. {3, } : Range of numbers (3, any)
                 
                 
                 * escaping special characters
@@ -3427,6 +3431,10 @@
                 
                     e.g., search for "." in a string 
                         pattern = re.compile(r'\.')
+
+                * left "LookArounds" for future 
+
+                * (?:) : means non capturing group, it will match pattern within the group but will not capture the results into the group
                 
                 
                 * Examples
@@ -3496,6 +3504,18 @@
                                 coreyms.com
                                 youtube.com
                                 nasa.gov
+
+                        *** also you can use back references in python pattern string, you are not bound to use sub()
+                                test = '''
+                                    nan-pip-nan
+                                    pap-pop-pap
+                                    ting-tong-ting
+                                '''
+
+                                pattern = re.compile(r'(\w+)-(\w+)-\1')
+                                matches = pattern.finditer(test)
+                                for m in matches:
+                                    print(m)
                 
                     4. pattern.findall()
                         a. returns all matches as a list of string if there is no "match group" in the pattern
